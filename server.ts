@@ -61,7 +61,7 @@ async function connectToMongo() {
       connected: false,
       configured: false,
       dbName: 'terra_workshop',
-      message: 'MONGODB_URI is not set in environment. Running with high-speed in-memory database storage.',
+      message: 'MONGODB_URI is not set. Running in high-speed in-memory database storage.',
       lastChecked: new Date().toISOString(),
       latencyMs: 0,
     };
@@ -71,16 +71,17 @@ async function connectToMongo() {
 
   mongoConnectionStatus.configured = true;
 
+  // Clean URI in case of trailing spaces or wrapping quotes
+  const sanitizedUri = mongoUri.trim().replace(/^["']|["']$/g, '');
+  let client: MongoClient | null = null;
+
   try {
     const startTime = Date.now();
-    const client = new MongoClient(mongoUri, {
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: false,
-        deprecationErrors: true,
-      },
-      connectTimeoutMS: 8000,
-      socketTimeoutMS: 10000,
+    client = new MongoClient(sanitizedUri, {
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 15000,
+      serverSelectionTimeoutMS: 8000,
+      maxPoolSize: 10,
     });
 
     await client.connect();
@@ -123,12 +124,34 @@ async function connectToMongo() {
       await database.createCollection('users');
     }
   } catch (err: any) {
-    console.error('⚠️ MongoDB connection error:', err?.message || err);
+    if (client) {
+      await client.close().catch(() => {});
+    }
+    const errMsg = err?.message || String(err);
+    console.error('⚠️ MongoDB connection notice:', errMsg);
+
+    let friendlyAdvice = errMsg;
+    if (
+      errMsg.includes('SSL alert number 80') ||
+      errMsg.includes('tlsv1 alert internal error') ||
+      errMsg.includes('SSL routines') ||
+      errMsg.includes('alert number')
+    ) {
+      friendlyAdvice =
+        'MongoDB Atlas IP Whitelist notice (SSL alert 80): In your MongoDB Atlas dashboard, go to "Network Access" -> click "Add IP Address" -> choose "Allow Access From Anywhere" (0.0.0.0/0). Meanwhile, the app is running smoothly on resilient in-memory storage.';
+    } else if (errMsg.includes('bad auth') || errMsg.includes('Authentication failed')) {
+      friendlyAdvice =
+        'MongoDB Authentication failed: Please verify your username and password in MONGODB_URI. Operating safely on resilient cache.';
+    } else if (errMsg.includes('querySrv ENOTFOUND') || errMsg.includes('ENOTFOUND')) {
+      friendlyAdvice =
+        'MongoDB cluster hostname not reachable. Serving data reliably from in-memory store.';
+    }
+
     mongoConnectionStatus = {
       connected: false,
       configured: true,
       dbName: 'terra_workshop',
-      message: `Connection attempt failed: ${err?.message || 'Check cluster credentials'}. Serving from resilient cache.`,
+      message: friendlyAdvice,
       lastChecked: new Date().toISOString(),
       latencyMs: 0,
     };
