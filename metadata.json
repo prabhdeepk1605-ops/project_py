@@ -1,6 +1,6 @@
 {
-  "name": "Terra Workshop",
-  "description": "Rooted in quality, driven by care. Eco-conscious, artisanal automotive care, service booking, and transparent pricing.",
+  "name": "Brother Motors",
+  "description": "Brother Motors - Complete car repair, paint, spare parts, and vehicle sales in Rampura Phul (BTI.). Affordable car disposal parts and expert automotive care.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

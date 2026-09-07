@@ -1,4 +1,13 @@
-export type NavTab = 'home' | 'services' | 'workshops' | 'pricing' | 'blog' | 'book';
+export type NavTab = 'home' | 'services' | 'pricing' | 'gallery' | 'contact';
+
+export interface GalleryMediaItem {
+  id: string;
+  type: 'image' | 'video';
+  url: string;
+  title: string;
+  category: 'repair' | 'paint' | 'parts' | 'workshop' | 'overhaul';
+  description?: string;
+}
 
 export interface ServiceCategory {
   id: string;

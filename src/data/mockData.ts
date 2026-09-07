@@ -6,325 +6,481 @@ import {
   SpecializedCareItem,
   CustomerReview,
   FAQItem,
+  GalleryMediaItem,
 } from '../types';
 
-export const HOTLINKED_IMAGES = {
-  hero: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCfFmlF-JM6VycfojJagkS9vPpmWXUIJFubli2aarvElnd1lwTz0R8ixz1GYtvz2Fvtw2Grc7P4-0hj3g4skiAagpTltNPMcr5a3u59NNnMZrOI4IPCFx28djLLlA4a_70RnT9zVAo-rgCCAy-k7Ni7DiE4Enzm_K6-_AAQCxk-8ZDGvjUHtHzBJo9Deu9yQ3DKQzCTKhfpU_6xERGeau8BWSnK4tg8hOrrCN0L94aL_y5g4LhVLdXupU15wuCVClmvmw',
-  bumperPaint: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB1RTCaQTmaizA_deKNbcTLc7XweH_hQikwwZ09GM4EkeDbUCGV1tUqQQfW7A7YBOnl_l0rxD_JthdmpAeG8UZ1dhaJWMjp57fk4UdKgLSA2LPU_9j9zC85uvKe5Tm8ZrCws-mTq1Cxh0Uiu3uQutZv5DmRddfksl-4nonOMkdR3zSDH0Jc8llp8OIEPiBmiAtdnwHqxlYvqrJ1XbnHaGdvoq0szxrREs0RI9vKoa0wmOuOhzNYWbt7W8zBefMtUnyRGg',
-  rubbingPolishing: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDsgex8ZzpNvZmMjC18Ghe23HQsAHFhmFiQpchBU3-ds1qo7wYonXmVpUPJEnDA6DAszTFqmSeNzhDt0ee3_H1DjkI_chEWpvNDJ4gHSm7RU98wvN9BJRQJJCRj4LTpyC1jvx1BJjWXuFLkB3H_9yAYFGN3nTafCIifgnueFLBwIULfpxjL0axrK-UdxbWa0BVdQVdGzCFKgFff6xGjLPyF_x_ck6jQlCy5q1-ic1GHO_qkyVPDXDt9',
-  deepCleanSpa: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDpSPWAjWy1vmcGqGRj9ks0HMfRHEsWoE6iO-rc5CR41LJt0J2-7XSZxYAVrCHluzSeK81n3Htu_wx8GxxCDdu9G94ZsuQR7s1MGKgIIjd6qTqHVKETN9B9-lAI5GS0i0eHuqhsbMV1bNEdYhx1CphLEjcTuSDR6_VKM4zT1SI92pQLKxlYQgo8fQi7Z2YZsEdfRE4NDrwP-rVVV04VvJo-jxzkkJpa3fYojqQ39EqaBbakdXUCreQVfgSsbZ2uvh_xsg',
-  referencePricingTable: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD_7Chqayln98_NQ5qxBKTNXSaCgl2jJuNPkUnMIOsyNjiHSoCS0lAMpneZj14dlb8Boy8viwWTHsixlQTPpBemBUzYpjQvke29gzzvMpMnXslsAu7Yi7yebTTo-g0zKhMXMefUZsPgKOcDWBiJFhuIETjZs4ZxUccVMv5BefqvBTcmjjjNpeXyz6Pz3invXWfbuBTkkkYS42uDf3nREdqicPTE8ixFK-X3vVRflT-YhpjT3moP8qJ_RPbFVRjunm2OYQ',
+export const WORKSHOP_DETAILS = {
+  name: 'BROTHER MOTORS',
+  tagline: 'Complete Car Repair, Paint, Spare Parts & Vehicle Sales',
+  phone1: '78376-00098',
+  phone2: '9501735844',
+  rawPhone1: '+917837600098',
+  rawPhone2: '+919501735844',
+  email: 'Harwi5911@gmail.com',
+  address: 'Near Jio Petrol Pump, Rampura Phul (BTI.)',
+  city: 'Rampura Phul (BTI.), Punjab',
+  mapsUrl: 'https://maps.app.goo.gl/ZBmR5ga6B37J5ad26',
+  openingHours: '8:00 AM – 6:00 PM',
+  instagramHandle: '@brother._motors',
+  instagramUrl: 'https://www.instagram.com/brother._motors?igsi=MXhqbXYzbW80NHJ0aQ==',
 };
 
+// Core Value Additions requested in Update Sheet
+export const CORE_ADDITIONS = [
+  {
+    id: 'spare-parts',
+    title: 'Spare Parts for All Car Types',
+    desc: 'Ready stock of genuine OES, OEM, and certified replacement parts for all domestic & imported vehicles (Maruti, Hyundai, Tata, Mahindra, Toyota, Honda & more).',
+    icon: 'Cpu',
+    badge: 'All Brands Stocked',
+  },
+  {
+    id: 'car-disposal-parts',
+    title: 'Car Disposal / Salvage Parts (20–30% Cheaper)',
+    desc: 'Tested, authentic car disposal and salvage components priced 20% to 30% lower than brand new parts. Thoroughly bench-tested for performance & durability.',
+    icon: 'TrendingDown',
+    badge: 'Save 20% – 30%',
+  },
+  {
+    id: 'car-repair-paint',
+    title: 'Full Car Repair & Paint Services',
+    desc: 'End-to-end mechanical repairs, engine rebuilds, suspension overhauls, computerized paint color matching, and heated booth spray painting.',
+    icon: 'Paintbrush',
+    badge: 'Master Mechanics',
+  },
+  {
+    id: 'sell-purchase-cars',
+    title: 'Sell & Purchase Cars (Govt. Vehicles Included)',
+    desc: 'Buy and sell inspected pre-owned cars, fleet models, and verified government auction vehicles with transparent documentation and fair valuation.',
+    icon: 'Car',
+    badge: 'Govt. Auctions & Used Cars',
+  },
+];
+
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
-  { id: 'our-services', name: 'Our Services', icon: 'Wrench', description: 'Core periodic maintenance and multi-point wellness tuning' },
-  { id: 'curated-custom', name: 'Curated Custom', icon: 'Sliders', description: 'Bespoke mechanical tuning and specialized upgrades' },
-  { id: 'summer-services', name: 'Summer Services', icon: 'Sun', description: 'Heatwave protection, coolant flush and AC optimization' },
-  { id: 'ac-repair', name: 'AC Repair', icon: 'Snowflake', description: 'Cooling diagnostic, antibacterial duct foam and gas top-up' },
-  { id: 'batteries', name: 'Batteries', icon: 'BatteryCharging', description: 'Health load test, terminal coating and quick replacement' },
-  { id: 'tyres-wheel', name: 'Tyres & Wheel', icon: 'Disc', description: 'Laser alignment, balancing, and tread safety inspection' },
-  { id: 'windshields-lights', name: 'Windshields & Lights', icon: 'Sparkles', description: 'Cracked glass replacement, headlight restoration and optics' },
-  { id: 'suspension-fitments', name: 'Suspension & Fitments', icon: 'Settings2', description: 'Shock absorbers, bush kit upgrades, and ride smoothing' },
-  { id: 'clutch-body', name: 'Clutch & Body Parts', icon: 'ShieldCheck', description: 'OEM replacement clutch sets, bumper clips and panels', isNew: true },
-  { id: 'insurance-claims', name: 'Insurance Claims', icon: 'FileText', description: 'Cashless claim settlement and survey assistance' },
+  { id: 'all-services', name: 'All Services', icon: 'Wrench', description: 'Complete vehicle repair, maintenance, and paint solutions' },
+  { id: 'car-repair-paint', name: 'Car Repair & Paint', icon: 'Paintbrush', description: 'Full mechanical repair, denting, and computerized paint finish' },
+  { id: 'spare-parts', name: 'Spare Parts & Disposal', icon: 'Cpu', description: 'New OES parts and 20-30% cheaper tested disposal parts' },
+  { id: 'periodic-service', name: 'Periodic Service', icon: 'Wrench', description: 'Oil changes, filters, tune-ups, and computerized diagnostics' },
+  { id: 'car-trading', name: 'Sell & Purchase Cars', icon: 'Car', description: 'Buy and sell private and government auction vehicles' },
+  { id: 'ac-cooling', name: 'AC & Climate Care', icon: 'Snowflake', description: 'Gas top-up, condenser flush, and cooling optimization' },
+];
+
+// Exact Pricing Table from Brother Motors Update Sheet
+export const PRICING_TABLE_SERVICES = [
+  {
+    id: 'basic-service',
+    number: 1,
+    service: 'Basic Service (800 Petrol)',
+    includes: 'Engine oil change, oil filter, 40 pt digital health check',
+    price: 300,
+    originalPrice: 450,
+    savings: '₹150 Saved',
+    icon: 'Wrench',
+    tag: 'Economical Care',
+  },
+  {
+    id: 'standard-service',
+    number: 2,
+    service: 'Standard Service (Alto)',
+    includes: 'All basic items + air filter, brake fluid flush, spark inspect',
+    price: 400,
+    originalPrice: 600,
+    savings: '₹200 Saved',
+    icon: 'Wrench',
+    tag: 'Most Popular',
+  },
+  {
+    id: 'comprehensive-service',
+    number: 3,
+    service: 'Comprehensive Service',
+    includes: 'Full vehicle tuning, wheel balancing, throttle body clean, AC filter',
+    price: 300,
+    originalPrice: 700,
+    savings: '₹400 Saved',
+    icon: 'Cpu',
+    tag: 'Full Vehicle Tuning',
+  },
+  {
+    id: 'ac-service',
+    number: 4,
+    service: 'AC Service & Gas Top-up',
+    includes: 'Refrigerant gas refill, condenser pressure wash, duct fogging',
+    price: 1500,
+    originalPrice: 2000,
+    savings: '₹500 Saved',
+    icon: 'Snowflake',
+    tag: 'Cooling Specialist',
+  },
+  {
+    id: 'brake-overhaul',
+    number: 5,
+    service: 'Front & Rear Brake Overhaul',
+    includes: 'Brake pad replacement, caliper pin greasing, disc rotor skim',
+    price: 1000,
+    originalPrice: 1400,
+    savings: '₹400 Saved',
+    icon: 'ShieldCheck',
+    tag: 'Safety Critical',
+  },
+  {
+    id: 'eco-deep-clean',
+    number: 6,
+    service: 'Eco Deep Clean & Spa',
+    includes: 'Steam upholstery shampoo, exterior Carnauba wax, underbody jet',
+    price: 500,
+    originalPrice: 800,
+    savings: '₹300 Saved',
+    icon: 'Sparkles',
+    tag: 'Interior & Exterior',
+  },
 ];
 
 export const SERVICES_LIST: ServiceItem[] = [
   {
-    id: 'essential-servicing',
-    title: 'Essential Servicing',
-    category: 'our-services',
-    shortDesc: 'Complete periodic checkup and precision tuning.',
-    fullDesc: 'Comprehensive 40-point vehicle checkup including synthetic engine oil change, oil filter replacement, air filter cleaning, fluid top-ups, and computerized diagnostics.',
-    price: 2199,
-    originalPrice: 2899,
-    savingsPercent: 25,
-    duration: '3 - 4 hrs',
+    id: 'basic-service',
+    title: 'Basic Service (800 Petrol)',
+    category: 'periodic-service',
+    shortDesc: 'Engine oil change, oil filter, 40 pt digital health check.',
+    fullDesc: 'Complete essential servicing designed specifically for petrol hatchbacks including engine oil replacement, fresh oil filter, and 40-point safety checkup.',
+    price: 300,
+    originalPrice: 450,
+    savingsPercent: 33,
+    duration: '1 - 2 hrs',
+    icon: 'Wrench',
+    features: [
+      'Engine oil replacement',
+      'OES oil filter change',
+      '40-Point safety health check',
+      'Coolant level check & top-up',
+      'Underbody inspection'
+    ],
+    tags: ['Periodic', 'Affordable', 'Engine Care']
+  },
+  {
+    id: 'standard-service',
+    title: 'Standard Service (Alto)',
+    category: 'periodic-service',
+    shortDesc: 'All basic items + air filter, brake fluid flush, spark inspect.',
+    fullDesc: 'Comprehensive intermediate servicing covering full basic package plus fresh engine air filter, brake line flushing, and spark plug gap calibration.',
+    price: 400,
+    originalPrice: 600,
+    savingsPercent: 33,
+    duration: '2 - 3 hrs',
     icon: 'Wrench',
     isPopular: true,
     features: [
-      '100% Synthetic Engine Oil (up to 3.5L)',
-      'OES Oil Filter Replacement',
-      'Air & Cabin Filter Cleaning / Inspect',
-      'Coolant & Brake Fluid Top-up',
-      '40-Point Digital Safety Health Card',
-      'Complimentary Eco Foam Exterior Wash'
+      'Engine oil & oil filter change',
+      'Air filter cleaning & replacement',
+      'Brake fluid flush & bleeding',
+      'Spark plug inspection & cleaning',
+      'Battery terminal check & 40-pt report'
     ],
-    recommendedInterval: 'Every 5,000 km or 6 Months',
-    tags: ['Periodic', 'Popular', 'Engine Health']
+    tags: ['Standard', 'Popular', 'Complete Maintenance']
   },
   {
-    id: 'restorative-care',
-    title: 'Restorative Care',
-    category: 'our-services',
-    shortDesc: 'Deep cleaning and organic finishing.',
-    fullDesc: 'Deep interior sanitization and exterior hand-glaze polishing using non-toxic botanical cleaners that nourish upholstery and restore paint clarity.',
-    price: 1899,
-    originalPrice: 2499,
-    savingsPercent: 24,
-    duration: '2 - 3 hrs',
-    icon: 'Sparkles',
-    features: [
-      'Antibacterial Steam Interior Sanitization',
-      'Deep Carpet & Seat Foam Extraction',
-      'Dashboard & Trim Conditioning with UV Shield',
-      '3-Step Hand Machine Rubbing & Wax',
-      'Tire Dressing & Glass De-fogging'
-    ],
-    recommendedInterval: 'Every 3 Months',
-    tags: ['Detailing', 'Interior Care', 'Eco Wash']
-  },
-  {
-    id: 'parts-replacement',
-    title: 'Parts Replacement',
-    category: 'our-services',
-    shortDesc: 'Sustainable and durable component swaps.',
-    fullDesc: 'Precision replacement of worn mechanical components using verified OES parts with an unconditional 6-month / 10,000 km warranty.',
-    price: 3499,
-    originalPrice: 4500,
-    savingsPercent: 22,
-    duration: '2 - 5 hrs',
+    id: 'comprehensive-service',
+    title: 'Comprehensive Service',
+    category: 'periodic-service',
+    shortDesc: 'Full vehicle tuning, wheel balancing, throttle body clean, AC filter.',
+    fullDesc: 'In-depth vehicle tuning and optimization including electronic throttle body sanitization, AC cabin filter renewal, and dynamic wheel balancing.',
+    price: 300,
+    originalPrice: 700,
+    savingsPercent: 57,
+    duration: '3 - 4 hrs',
     icon: 'Cpu',
     features: [
-      'Brake Pads & Rotor Disk Servicing',
-      'Spark Plug & Ignition Coil Testing',
-      'Drive Belt & Tensioner Inspection',
-      'Genuine OES Component Guaranteed',
-      'Digital Wear & Tear Diagnostic Log'
+      'Full engine electronic tuning',
+      'Throttle body ultrasonic clean',
+      'AC cabin filter replacement',
+      'Wheel balancing & alignment check',
+      'Suspension noise diagnosis'
     ],
-    tags: ['Mechanical', 'Warranty', 'Safety']
+    tags: ['Comprehensive', 'Tuning', 'High Value']
   },
   {
-    id: 'thorough-inspections',
-    title: 'Thorough Inspections',
-    category: 'our-services',
-    shortDesc: 'Detailed holistic health reports.',
-    fullDesc: 'Rigorous 100-point pre-purchase and road trip assessment covering OBD-II ECU diagnostics, battery health, suspension play, and underbody scan.',
-    price: 999,
-    originalPrice: 1499,
-    savingsPercent: 33,
-    duration: '1.5 hrs',
-    icon: 'CheckCircle',
-    isNew: true,
-    features: [
-      '100-Point Comprehensive Diagnostic',
-      'OBD-II Live Error Code Scanning',
-      'Battery Load & Alternator Waveform Test',
-      'Brake Fluid Moisture Level Analysis',
-      'Detailed PDF Report with High-Res Photos'
-    ],
-    tags: ['Inspection', 'Pre-Trip', 'Health Score']
-  },
-  {
-    id: 'ac-cooling-repair',
+    id: 'ac-service',
     title: 'AC Service & Gas Top-up',
-    category: 'ac-repair',
-    shortDesc: 'Cooling diagnostics, gas replenishment, and antibacterial clean.',
-    fullDesc: 'Keep your cabin pristine and refreshing with pure R134a refrigerant charge, condenser flush, leak testing, and antibacterial duct fogging.',
-    price: 1599,
-    originalPrice: 1999,
-    savingsPercent: 20,
-    duration: '2 hrs',
+    category: 'ac-cooling',
+    shortDesc: 'Refrigerant gas refill, condenser pressure wash, duct fogging.',
+    fullDesc: 'Restore chilling cabin temperatures. Complete R134a refrigerant charge, high-pressure condenser mud cleanup, and antibacterial duct fogging.',
+    price: 1500,
+    originalPrice: 2000,
+    savingsPercent: 25,
+    duration: '1.5 - 2 hrs',
     icon: 'Snowflake',
     features: [
-      'High-grade Refrigerant Gas Refill (up to 400g)',
-      'AC Condenser High-Pressure Cleaning',
-      'AC Cabin Filter Cleaning & Dusting',
-      'Compressor Oil & Leak Vacuum Test',
-      'Duct Antibacterial Ozone Sanitization'
+      'Full refrigerant gas recharge',
+      'Condenser coil jet pressure wash',
+      'Compressor oil vacuum test',
+      'Antibacterial AC duct fogging',
+      'Cooling temperature thermometer verification'
     ],
-    tags: ['AC', 'Cooling', 'Summer']
+    tags: ['AC Gas', 'Summer', 'Cooling']
   },
   {
-    id: 'battery-replacement',
-    title: 'Battery Health & Replacement',
-    category: 'batteries',
-    shortDesc: 'Testing, terminal protection, and quick replacement.',
-    fullDesc: 'Comprehensive digital load testing, terminal sulfur cleanup, and instant replacement with top-tier sealed maintenance-free batteries with up to 55-month warranty.',
-    price: 2999,
-    originalPrice: 3800,
-    savingsPercent: 21,
-    duration: '45 mins',
-    icon: 'BatteryCharging',
-    features: [
-      'Cold Cranking Amps (CCA) Electronic Test',
-      'Alternator Voltage & Starter Load Analysis',
-      'Anti-Corrosion Gel Terminal Treatment',
-      'Old Battery Buyback / Scrappage Discount',
-      'Free Doorstep Battery Jumpstart/Fitment'
-    ],
-    tags: ['Battery', 'Electrical', 'Quick']
-  },
-  {
-    id: 'tyre-wheel-care',
-    title: 'Wheel Alignment & Balancing',
-    category: 'tyres-wheel',
-    shortDesc: '3D Laser alignment and high-speed dynamic balancing.',
-    fullDesc: 'Optimize tire longevity and driving stability with 4-wheel computerized 3D laser alignment, dynamic balancing, and tire rotation.',
-    price: 799,
-    originalPrice: 1100,
-    savingsPercent: 27,
-    duration: '1 hr',
-    icon: 'Disc',
-    features: [
-      'Computerized 3D 4-Wheel Alignment',
-      'Wheel Balancing with Precision Lead Weights',
-      'Tire Rotation for Uniform Tread Wear',
-      'Nitrogen Gas Top-Up on all 5 Tyres',
-      'Tread Depth & Pressure Sensor (TPMS) Check'
-    ],
-    tags: ['Tyres', 'Safety', 'Alignment']
-  },
-  {
-    id: 'denting-painting',
-    title: 'Denting & Panel Painting',
-    category: 'curated-custom',
-    shortDesc: 'Flawless color matching and oven-baked finish.',
-    fullDesc: 'Restore vehicle panels to factory perfection with computerized paint matching, anti-rust primer coat, and scratch-resistant DuPont clear coat.',
-    price: 2499,
-    originalPrice: 3200,
-    savingsPercent: 22,
-    duration: '24 - 48 hrs',
-    icon: 'Paintbrush',
-    features: [
-      'Computerized Paint Color Matching (99.8%)',
-      'High-grade Anti-Corrosion Primer',
-      'Multi-Layer Clear Coat in Dust-Free Booth',
-      'Full Panel Rubbing & Polish Buffing',
-      '2-Year Guarantee on Paint Peeling'
-    ],
-    tags: ['Paint', 'Bodywork', 'Custom']
-  },
-  {
-    id: 'car-spa-deluxe',
-    title: 'Deluxe Organic Car Spa',
-    category: 'summer-services',
-    shortDesc: 'Water-efficient botanical wash and interior rejuvenation.',
-    fullDesc: 'Environmentally responsible car wash that saves over 85% water compared to traditional washes, paired with organic beeswax glaze.',
-    price: 1199,
-    originalPrice: 1599,
-    savingsPercent: 25,
-    duration: '1.5 hrs',
-    icon: 'Droplets',
-    features: [
-      'Eco-Friendly Water Recycling Pressure Wash',
-      'Underbody High-Pressure Mud Flush',
-      'Organic Carnauba Wax Protective Glaze',
-      'Interior Vacuum & Anti-Static Dust Wipe',
-      'Tire & Rim Degrease and Satin Polish'
-    ],
-    tags: ['Car Spa', 'Eco Wash', 'Grooming']
-  },
-  {
-    id: 'windshield-headlight',
-    title: 'Windshields & Headlight Optics',
-    category: 'windshields-lights',
-    shortDesc: 'Crystal clear visibility and UV headlight de-yellowing.',
-    fullDesc: 'Restore cloudy or yellowed headlights to maximum illumination and seal cracks or install OEM acoustic windshields.',
-    price: 1299,
-    originalPrice: 1799,
+    id: 'brake-overhaul',
+    title: 'Front & Rear Brake Overhaul',
+    category: 'car-repair-paint',
+    shortDesc: 'Brake pad replacement, caliper pin greasing, disc rotor skim.',
+    fullDesc: 'Ensure zero-slip stopping power with precision brake pad replacements, caliper slide pin greasing, and rotor disc surface turning.',
+    price: 1000,
+    originalPrice: 1400,
     savingsPercent: 28,
-    duration: '1.5 hrs',
-    icon: 'Sun',
+    duration: '2 - 3 hrs',
+    icon: 'ShieldCheck',
     features: [
-      'Headlight Lens Wet Sanding & UV Sealant',
-      'Wiper Blade Wiper Arm Calibration',
-      'Windshield Hydrophobic Rain-Repellent Treatment',
-      'OEM Toughened / Laminated Glass Available',
-      'Rear Defogger & High-Mount Light Check'
+      'Front & rear brake pad fitting',
+      'Caliper pin high-temp greasing',
+      'Disc rotor skimming / truing',
+      'Brake line air bleed',
+      'Road braking grip test'
     ],
-    tags: ['Visibility', 'Lights', 'Safety']
+    tags: ['Brakes', 'Safety', 'Overhaul']
   },
   {
-    id: 'suspension-overhaul',
-    title: 'Suspension & Strut Tuning',
-    category: 'suspension-fitments',
-    shortDesc: 'Eliminate rattles and enjoy a cloud-smooth ride.',
-    fullDesc: 'Complete inspection and replacement of shock absorbers, strut mountings, stabilizer link rods, and lower arm bushes.',
-    price: 4499,
-    originalPrice: 5999,
-    savingsPercent: 25,
-    duration: '4 - 6 hrs',
-    icon: 'Sliders',
+    id: 'eco-deep-clean',
+    title: 'Eco Deep Clean & Spa',
+    category: 'periodic-service',
+    shortDesc: 'Steam upholstery shampoo, exterior Carnauba wax, underbody jet.',
+    fullDesc: 'Total vehicle rejuvenation. High-pressure steam upholstery shampooing, rich exterior Carnauba wax glow, and underbody high-power water blast.',
+    price: 500,
+    originalPrice: 800,
+    savingsPercent: 37,
+    duration: '1.5 - 2 hrs',
+    icon: 'Sparkles',
     features: [
-      'Strut & Shock Absorber Hydraulic Damping Test',
-      'Polyurethane / Heavy-Duty Bush Replacement',
-      'Steering Rack Play & Tie Rod Tuning',
-      'Road Bump NVH (Noise, Vibration, Harshness) Audit',
-      'Wheel Alignment Included'
+      'High-pressure underbody mud blast',
+      'Interior vacuum & fabric steam shampoo',
+      'Exterior hand foam & Carnauba wax',
+      'Dashboard & door trim polish',
+      'Tire dress & rim shine'
     ],
-    tags: ['Suspension', 'Comfort', 'Ride Quality']
+    tags: ['Spa', 'Wash', 'Detailing']
   },
   {
-    id: 'clutch-overhaul',
-    title: 'Clutch & Transmission Care',
-    category: 'clutch-body',
-    shortDesc: 'Smooth gear shifts and clutch plate overhaul.',
-    fullDesc: 'Solve clutch slippage, hard pedal, and gear grinding with precision friction plate and pressure plate replacements.',
-    price: 3899,
-    originalPrice: 5200,
-    savingsPercent: 25,
-    duration: '5 - 7 hrs',
-    icon: 'Layers',
+    id: 'spare-parts-catalog',
+    title: 'Spare Parts for All Cars',
+    category: 'spare-parts',
+    shortDesc: 'Brand new OEM / OES parts for all makes & models with genuine guarantee.',
+    fullDesc: 'We stock mechanical and electrical spare parts for Maruti, Hyundai, Tata, Mahindra, Toyota, Honda, and more. Direct wholesale sourcing.',
+    price: 0,
+    duration: 'Instant / Same Day',
+    icon: 'Cpu',
+    features: [
+      'All car brands and models covered',
+      'Suspension, engine, brake, and gearbox spares',
+      'Filters, belts, pumps, and spark plugs',
+      'Guaranteed genuine quality'
+    ],
+    tags: ['Spare Parts', 'OEM', 'All Cars']
+  },
+  {
+    id: 'car-disposal-parts',
+    title: 'Tested Car Disposal Parts (20–30% Cheaper)',
+    category: 'spare-parts',
+    shortDesc: 'Salvage and disposal parts verified for quality, saving you 20% to 30%.',
+    fullDesc: 'Get authentic original components from dismantled and disposal vehicles at 20% to 30% below the cost of new parts. Inspected for high reliability.',
+    price: 0,
+    duration: 'Ready in Stock',
+    icon: 'TrendingDown',
     isNew: true,
     features: [
-      'Clutch Plate & Pressure Plate Replacement',
-      'Release Bearing Inspection & Grease',
-      'Flywheel Resurfacing & Inspection',
-      'Transmission Oil Flush (Synthetic)',
-      'Clutch Cable / Master Cylinder Bleeding'
+      '20% to 30% savings vs. brand new parts',
+      'Doors, bumpers, lights, gearboxes, and alternators',
+      'Tested and inspected by master mechanics',
+      'Budget-friendly alternative for major repairs'
     ],
-    tags: ['Clutch', 'Transmission', 'Performance']
+    tags: ['Disposal Parts', '20-30% Off', 'Budget']
+  },
+  {
+    id: 'full-car-repair-paint',
+    title: 'Full Car Repair & Paint Services',
+    category: 'car-repair-paint',
+    shortDesc: 'Complete mechanical overhaul, dent removal, and booth paint finishes.',
+    fullDesc: 'State-of-the-art body shop and mechanical overhaul bay. From engine rebore to complete car repainting with high-gloss clear coats.',
+    price: 0,
+    duration: 'Custom Estimate',
+    icon: 'Paintbrush',
+    features: [
+      'Denting & panel realignment',
+      'Computerized paint color matching',
+      'Heated paint booth baked finish',
+      'Full gearbox, suspension, and engine repairs'
+    ],
+    tags: ['Paint', 'Denting', 'Full Repair']
+  },
+  {
+    id: 'sell-purchase-vehicles',
+    title: 'Sell & Purchase Cars (Govt. Vehicles)',
+    category: 'car-trading',
+    shortDesc: 'Fair pricing, verified pre-owned cars, and government auction vehicles.',
+    fullDesc: 'Looking to buy or sell a car? We handle private certified pre-owned vehicles and specialize in government auction fleet vehicles with legal documentation.',
+    price: 0,
+    duration: 'Instant Evaluation',
+    icon: 'Car',
+    features: [
+      'Sell your car at best market value',
+      'Inspected used cars for sale',
+      'Government auction vehicles available',
+      'Complete RC transfer & paperwork support'
+    ],
+    tags: ['Sell Car', 'Buy Car', 'Govt Vehicles']
+  }
+];
+
+// The 10 Gallery Media Items provided in the prompt
+export const GALLERY_MEDIA: GalleryMediaItem[] = [
+  {
+    id: 'gallery-1',
+    type: 'image',
+    url: 'https://res.cloudinary.com/tzuyjbw7/image/upload/f_auto,q_auto/1000434595',
+    title: 'Brother Motors Workshop Floor',
+    category: 'workshop',
+    description: 'Active vehicle servicing and mechanical overhaul bays at Brother Motors, Rampura Phul.'
+  },
+  {
+    id: 'gallery-2',
+    type: 'image',
+    url: 'https://res.cloudinary.com/tzuyjbw7/image/upload/v1788434168/1000434596.jpg',
+    title: 'Engine & Mechanical Diagnostic',
+    category: 'repair',
+    description: 'Precision mechanical troubleshooting and component inspection.'
+  },
+  {
+    id: 'gallery-3',
+    type: 'image',
+    url: 'https://res.cloudinary.com/tzuyjbw7/image/upload/v1788434170/unnamed_3.jpg',
+    title: 'Vehicle Paint & Finish Bay',
+    category: 'paint',
+    description: 'Professional surface preparation and high-gloss paint finishing.'
+  },
+  {
+    id: 'gallery-4',
+    type: 'image',
+    url: 'https://res.cloudinary.com/tzuyjbw7/image/upload/v1788505371/1000434601.jpg',
+    title: 'Suspension & Chassis Work',
+    category: 'overhaul',
+    description: 'Heavy-duty suspension replacement and undercarriage assembly.'
+  },
+  {
+    id: 'gallery-5',
+    type: 'image',
+    url: 'https://res.cloudinary.com/tzuyjbw7/image/upload/v1788505371/1000434580.jpg',
+    title: 'Spare Parts & Assembly Stock',
+    category: 'parts',
+    description: 'Extensive inventory of spare parts and tested disposal components.'
+  },
+  {
+    id: 'gallery-6',
+    type: 'video',
+    url: 'https://res.cloudinary.com/tzuyjbw7/video/upload/v1788507492/Snapchat-78754025.mp4',
+    title: 'Live Workshop Action - Service Bay',
+    category: 'workshop',
+    description: 'Mechanics in action performing live maintenance at Brother Motors.'
+  },
+  {
+    id: 'gallery-7',
+    type: 'video',
+    url: 'https://res.cloudinary.com/tzuyjbw7/video/upload/v1788507493/Snapchat-1140503216.mp4',
+    title: 'Vehicle Inspection & Tuning',
+    category: 'repair',
+    description: 'In-progress diagnostic checks and engine tuning.'
+  },
+  {
+    id: 'gallery-8',
+    type: 'image',
+    url: 'https://res.cloudinary.com/tzuyjbw7/image/upload/v1788507495/Snapchat-487402997.jpg',
+    title: 'Workshop Front & Service Queue',
+    category: 'workshop',
+    description: 'Brother Motors service yard near Jio Petrol Pump, Rampura Phul.'
+  },
+  {
+    id: 'gallery-9',
+    type: 'video',
+    url: 'https://res.cloudinary.com/tzuyjbw7/video/upload/v1788507497/Swift_gearbox_overall_and_suspension_done____carcalture__automotive__cars__reels__repair_MP4.mp4',
+    title: 'Swift Gearbox Overhaul & Suspension Done',
+    category: 'overhaul',
+    description: 'Complete Maruti Swift gearbox overhaul and suspension rebuild completed by Brother Motors.'
+  },
+  {
+    id: 'gallery-10',
+    type: 'video',
+    url: 'https://res.cloudinary.com/tzuyjbw7/video/upload/v1788507510/_bike__automotive__honda__100ss_MP4.mp4',
+    title: 'Automotive Tuning & Restorations',
+    category: 'repair',
+    description: 'Precision engineering and mechanical restoration project at Brother Motors.'
+  }
+];
+
+export const WORKSHOP_LOCATIONS: WorkshopLocation[] = [
+  {
+    id: 'brother-motors-rampura-phul',
+    name: 'BROTHER MOTORS — Rampura Phul',
+    city: 'Rampura Phul (BTI.)',
+    address: 'Near Jio Petrol Pump, Rampura Phul (BTI.), Punjab',
+    phone: '78376-00098, 9501735844',
+    hours: 'Mon - Sun: 8:00 AM – 6:00 PM',
+    rating: 4.9,
+    reviewsCount: 380,
+    features: [
+      'Near Jio Petrol Pump — Easy Highway Access',
+      'Spare Parts for All Car Types in Stock',
+      'Car Disposal Parts (20%–30% Cheaper)',
+      'Full Car Repair & Professional Paint Booth',
+      'Sell & Purchase of Cars (Govt. Vehicles Included)'
+    ],
+    imageUrl: 'https://res.cloudinary.com/tzuyjbw7/image/upload/v1788434168/1000434596.jpg'
   }
 ];
 
 export const SPECIALIZED_CARE: SpecializedCareItem[] = [
   {
-    id: 'front-bumper-paint',
-    title: 'Front Bumper Paint',
-    subtitle: 'Flawless color matching and eco-friendly clear coats for a seamless finish that lasts.',
-    badge: 'Restoration',
-    description: 'Specialized scratch, scuff, and crack repair for front and rear bumper assemblies. We utilize computerized spectral color analysis to guarantee a 100% factory color match in our dust-free heat-baking paint booth.',
-    imageUrl: HOTLINKED_IMAGES.bumperPaint,
-    duration: '24 Hours',
-    priceRange: '₹2,199 - ₹3,499',
+    id: 'car-repair-paint-overhaul',
+    title: 'Full Car Repair & Paint Booth',
+    subtitle: 'Flawless denting, computerized paint matching, and baked gloss finish.',
+    badge: 'Body & Paint',
+    description: 'From major dent removal and scratch repair to complete exterior vehicle repainting with high-grade anti-rust primer and UV-resistant clear coat.',
+    imageUrl: 'https://res.cloudinary.com/tzuyjbw7/image/upload/v1788434170/unnamed_3.jpg',
+    duration: '24 - 48 Hours',
+    priceRange: 'Upfront Quotes on Inspection',
     benefits: [
-      'Computerized spectral paint matching',
-      'Oven-baked clear coat for ultra-gloss finish',
-      '2-Year warranty against flaking and bubbling',
-      'Preserves original bumper plastic elasticity'
+      'Computerized color shade matching for factory look',
+      'Full denting and structural alignment',
+      'High-gloss heat-baked clear coat finish',
+      'Genuine anti-rust base primer protection'
     ]
   },
   {
-    id: 'rubbing-polishing',
-    title: 'Rubbing & Polishing',
-    subtitle: 'Restore showroom shine and eliminate micro-scratches.',
-    badge: 'Premium Finish',
-    description: 'Meticulous 3-stage compounding and rotary orbital polishing that safely removes swirl marks, minor oxidation, and surface holograms, sealed with high-grade synthetic sealant.',
-    imageUrl: HOTLINKED_IMAGES.rubbingPolishing,
-    duration: '3 - 4 Hours',
-    priceRange: '₹1,499 - ₹2,799',
+    id: 'car-disposal-parts-savings',
+    title: 'Car Disposal / Salvage Parts',
+    subtitle: 'Genuine tested components saving you 20% to 30% compared to new parts.',
+    badge: 'Save 20% – 30%',
+    description: 'Sourced from disposal vehicles and rigorously tested for integrity. Get authentic body panels, gearboxes, electronic modules, and alternators at significant savings.',
+    imageUrl: 'https://res.cloudinary.com/tzuyjbw7/image/upload/v1788505371/1000434580.jpg',
+    duration: 'Ready in Stock',
+    priceRange: '20% to 30% Below New Part MRP',
     benefits: [
-      'Dual-action rotary polishing with German Meguiar pads',
-      'Removes 90%+ of swirl marks and light spider-webbing',
-      'Deep optical clarity with water-beading hydrophobic glaze',
-      'Gentle on clear coat thickness (micrometer measured)'
+      'Tested and verified by master mechanics',
+      'Huge savings on major repairs and body panels',
+      'All major Indian & imported models supported',
+      'Immediate availability in our Rampura Phul yard'
     ]
   },
   {
-    id: 'deep-clean-spa',
-    title: 'Deep All Round Spa',
-    subtitle: 'Interior & exterior rejuvenation with organic cleansers.',
-    badge: 'Holistic Spa',
-    description: 'Our signature restorative spa treatment. Deep steam extraction for fabrics, leather conditioning with natural plant waxes, engine bay dry ice wash, and 360-degree exterior foam glow.',
-    imageUrl: HOTLINKED_IMAGES.deepCleanSpa,
-    duration: '2 - 3 Hours',
-    priceRange: '₹1,299 - ₹2,299',
+    id: 'gearbox-suspension-overhaul',
+    title: 'Gearbox & Suspension Overhaul',
+    subtitle: 'Solve hard shifting, clutch slippage, and suspension rattles.',
+    badge: 'Mechanical Expert',
+    description: 'Complete transmission and suspension rebuilds. As featured in our Swift gearbox overhaul projects, we deliver smooth shifts and brand new ride quality.',
+    imageUrl: 'https://res.cloudinary.com/tzuyjbw7/image/upload/v1788505371/1000434601.jpg',
+    duration: 'Same Day / 24 Hours',
+    priceRange: 'Custom Itemized Estimate',
     benefits: [
-      'Zero harsh chemical odors — pure botanical aromatherapy',
-      'High-pressure steam kills 99.9% of bacteria and allergens',
-      'Underbody jet mud and salt removal',
-      'Dashboard, consoles, and door cards conditioned with matte UV blocker'
+      'Full gearbox disassembly and bearing replacements',
+      'Heavy-duty suspension struts and bush upgrades',
+      'Clutch plate and pressure plate fitting',
+      'Comprehensive road test and wheel balancing'
     ]
   }
 ];
@@ -334,201 +490,98 @@ export const VEHICLE_MAKES: VehicleMake[] = [
     id: 'maruti-suzuki',
     name: 'Maruti Suzuki',
     models: [
-      { name: 'Alto / 800', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
-      { name: 'Alto K10', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.05 },
-      { name: 'Swift', type: 'Hatchback', fuelOptions: ['Petrol', 'Diesel', 'CNG'], priceMultiplier: 1.15 },
-      { name: 'Baleno', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.2 },
-      { name: 'WagonR', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.05 },
-      { name: 'Dzire', type: 'Sedan', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.2 },
-      { name: 'Brezza', type: 'SUV', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.3 },
-      { name: 'Ertiga', type: 'MUV', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.35 },
-      { name: 'Grand Vitara', type: 'SUV', fuelOptions: ['Hybrid', 'Petrol', 'CNG'], priceMultiplier: 1.4 },
+      { name: '800 / Alto', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'Alto K10', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'Swift', type: 'Hatchback', fuelOptions: ['Petrol', 'Diesel', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'WagonR', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'Dzire', type: 'Sedan', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'Baleno', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'Brezza', type: 'SUV', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'Ertiga', type: 'MUV', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
       { name: 'Omni / Eeco', type: 'MUV', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
-      { name: 'Ritz', type: 'Hatchback', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.08 },
     ]
   },
   {
     id: 'hyundai',
     name: 'Hyundai',
     models: [
-      { name: 'i10 / Grand i10 Nios', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.1 },
-      { name: 'i20', type: 'Hatchback', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.2 },
-      { name: 'Aura / Xcent', type: 'Sedan', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.18 },
-      { name: 'Verna', type: 'Sedan', fuelOptions: ['Petrol', 'Turbo Petrol'], priceMultiplier: 1.35 },
-      { name: 'Venue', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.25 },
-      { name: 'Creta', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.4 },
-      { name: 'Tucson', type: 'SUV', fuelOptions: ['Diesel', 'Petrol'], priceMultiplier: 1.6 },
-      { name: 'Ioniq 5', type: 'EV', fuelOptions: ['Electric'], priceMultiplier: 1.5 },
+      { name: 'Santro / i10', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'i20', type: 'Hatchback', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
+      { name: 'Verna', type: 'Sedan', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
+      { name: 'Creta', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
+      { name: 'Venue', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
     ]
   },
   {
     id: 'tata',
     name: 'Tata Motors',
     models: [
-      { name: 'Tiago / Tiago EV', type: 'Hatchback', fuelOptions: ['Petrol', 'Electric', 'CNG'], priceMultiplier: 1.1 },
-      { name: 'Tigor / Tigor EV', type: 'Sedan', fuelOptions: ['Petrol', 'Electric', 'CNG'], priceMultiplier: 1.15 },
-      { name: 'Altroz', type: 'Hatchback', fuelOptions: ['Petrol', 'Diesel', 'CNG'], priceMultiplier: 1.2 },
-      { name: 'Punch / Punch EV', type: 'SUV', fuelOptions: ['Petrol', 'Electric', 'CNG'], priceMultiplier: 1.22 },
-      { name: 'Nexon / Nexon EV', type: 'SUV', fuelOptions: ['Petrol', 'Diesel', 'Electric'], priceMultiplier: 1.35 },
-      { name: 'Harrier', type: 'SUV', fuelOptions: ['Diesel'], priceMultiplier: 1.55 },
-      { name: 'Safari', type: 'SUV', fuelOptions: ['Diesel'], priceMultiplier: 1.6 },
-    ]
-  },
-  {
-    id: 'toyota',
-    name: 'Toyota',
-    models: [
-      { name: 'Glanza', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.2 },
-      { name: 'Urban Cruiser Taisor', type: 'SUV', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.25 },
-      { name: 'Urban Cruiser Hyryder', type: 'SUV', fuelOptions: ['Hybrid', 'Petrol', 'CNG'], priceMultiplier: 1.4 },
-      { name: 'Innova Crysta / Hycross', type: 'MUV', fuelOptions: ['Hybrid', 'Petrol', 'Diesel'], priceMultiplier: 1.65 },
-      { name: 'Fortuner / Legender', type: 'SUV', fuelOptions: ['Diesel', 'Petrol'], priceMultiplier: 1.85 },
-      { name: 'Camry', type: 'Sedan', fuelOptions: ['Hybrid'], priceMultiplier: 1.75 },
-    ]
-  },
-  {
-    id: 'honda',
-    name: 'Honda',
-    models: [
-      { name: 'Amaze', type: 'Sedan', fuelOptions: ['Petrol'], priceMultiplier: 1.18 },
-      { name: 'City (Gen 4/5)', type: 'Sedan', fuelOptions: ['Petrol', 'Hybrid'], priceMultiplier: 1.35 },
-      { name: 'Elevate', type: 'SUV', fuelOptions: ['Petrol'], priceMultiplier: 1.38 },
-      { name: 'Jazz / WR-V', type: 'Hatchback', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.2 },
+      { name: 'Tiago', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'Altroz', type: 'Hatchback', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
+      { name: 'Nexon', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
+      { name: 'Punch', type: 'SUV', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
+      { name: 'Harrier / Safari', type: 'SUV', fuelOptions: ['Diesel'], priceMultiplier: 1.0 },
     ]
   },
   {
     id: 'mahindra',
     name: 'Mahindra',
     models: [
-      { name: 'XUV 3XO / 300', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.3 },
-      { name: 'Thar / Thar Roxx', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.45 },
-      { name: 'Scorpio-N / Classic', type: 'SUV', fuelOptions: ['Diesel', 'Petrol'], priceMultiplier: 1.5 },
-      { name: 'XUV700', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.6 },
-      { name: 'Bolero / Neo', type: 'SUV', fuelOptions: ['Diesel'], priceMultiplier: 1.25 },
+      { name: 'Bolero / Neo', type: 'SUV', fuelOptions: ['Diesel'], priceMultiplier: 1.0 },
+      { name: 'Scorpio / Classic', type: 'SUV', fuelOptions: ['Diesel'], priceMultiplier: 1.0 },
+      { name: 'Thar', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
+      { name: 'XUV 300 / 700', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
     ]
   },
   {
-    id: 'volkswagen-skoda',
-    name: 'Volkswagen / Škoda',
+    id: 'toyota',
+    name: 'Toyota',
     models: [
-      { name: 'Polo / Vento', type: 'Hatchback', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.3 },
-      { name: 'Taigun / Kushaq', type: 'SUV', fuelOptions: ['Turbo Petrol'], priceMultiplier: 1.45 },
-      { name: 'Virtus / Slavia', type: 'Sedan', fuelOptions: ['Turbo Petrol'], priceMultiplier: 1.45 },
-      { name: 'Tiguan / Kodiaq', type: 'SUV', fuelOptions: ['Turbo Petrol'], priceMultiplier: 1.8 },
+      { name: 'Innova / Crysta', type: 'MUV', fuelOptions: ['Diesel', 'Petrol'], priceMultiplier: 1.0 },
+      { name: 'Fortuner', type: 'SUV', fuelOptions: ['Diesel', 'Petrol'], priceMultiplier: 1.0 },
+      { name: 'Glanza', type: 'Hatchback', fuelOptions: ['Petrol', 'CNG'], priceMultiplier: 1.0 },
     ]
   },
   {
-    id: 'kia',
-    name: 'Kia',
+    id: 'honda',
+    name: 'Honda',
     models: [
-      { name: 'Sonet', type: 'SUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.25 },
-      { name: 'Seltos', type: 'SUV', fuelOptions: ['Petrol', 'Diesel', 'Turbo Petrol'], priceMultiplier: 1.4 },
-      { name: 'Carens', type: 'MUV', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.38 },
-      { name: 'EV6', type: 'EV', fuelOptions: ['Electric'], priceMultiplier: 1.65 },
+      { name: 'City', type: 'Sedan', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
+      { name: 'Amaze', type: 'Sedan', fuelOptions: ['Petrol', 'Diesel'], priceMultiplier: 1.0 },
     ]
-  }
-];
-
-export const WORKSHOP_LOCATIONS: WorkshopLocation[] = [
-  {
-    id: 'vijayawada-central',
-    name: 'Terra Central Studio — Vijayawada',
-    city: 'Vijayawada, India',
-    address: 'MG Road, Opposite Gateway Hotel, Labbipet, Vijayawada, AP 520010',
-    phone: '+91 866 247 8899',
-    hours: 'Mon - Sun: 8:00 AM – 8:30 PM',
-    rating: 4.9,
-    reviewsCount: 1420,
-    features: [
-      'Solar-Powered 8-Bay Facility',
-      'Filtered Rain-Harvested Car Spa',
-      'Air-Conditioned Lounge with Organic Coffee',
-      'Live HD Service Webcam Streaming',
-      'Free Valet Pickup & Drop within 15 km'
-    ],
-    imageUrl: 'https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'portland-roots',
-    name: 'Terra Roots Hub — Portland',
-    city: 'Portland, OR',
-    address: '1420 SE Water Ave, Central Eastside, Portland, OR 97214',
-    phone: '+1 (503) 555-0194',
-    hours: 'Mon - Sat: 7:30 AM – 6:30 PM',
-    rating: 4.95,
-    reviewsCount: 890,
-    features: [
-      '100% Carbon-Neutral Certified',
-      'EV Battery Diagnostic Lab',
-      'Artisan Wood & Leather Repair Center',
-      'Complimentary Hybrid Loaner Bikes & Cars'
-    ],
-    imageUrl: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'seattle-green',
-    name: 'Terra Green Bay — Seattle',
-    city: 'Seattle, WA',
-    address: '955 S Holgate St, SODO Industrial District, Seattle, WA 98134',
-    phone: '+1 (206) 555-0842',
-    hours: 'Mon - Sun: 8:00 AM – 7:00 PM',
-    rating: 4.88,
-    reviewsCount: 650,
-    features: [
-      'Underbody Anti-Rust Marine Weatherproofing',
-      'Certified EV & Hybrid Specialists',
-      'Zero-Waste Oil Recycling Partnership'
-    ],
-    imageUrl: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'austin-solar',
-    name: 'Terra Solar Studio — Austin',
-    city: 'Austin, TX',
-    address: '2201 E 7th St, East Austin, Austin, TX 78702',
-    phone: '+1 (512) 555-0371',
-    hours: 'Mon - Sat: 7:30 AM – 7:00 PM',
-    rating: 4.92,
-    reviewsCount: 520,
-    features: [
-      'High-Efficiency AC Recovery Systems',
-      'Ceramic Shield Coating Cleanroom',
-      'Outdoor Shaded Workspace with Gigabit Wi-Fi'
-    ],
-    imageUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80'
   }
 ];
 
 export const CUSTOMER_REVIEWS: CustomerReview[] = [
   {
     id: 'rev-1',
-    author: 'Suresh Varma',
-    vehicle: 'Maruti Suzuki Swift (2022)',
+    author: 'Gurpreet Singh',
+    vehicle: 'Maruti Suzuki Swift',
     rating: 5,
-    date: '3 days ago',
-    comment: 'The transparency at Terra Workshop is unmatched in Vijayawada! They sent me video clips of the dirty filter vs new OES filter before replacing. Saved around ₹1,400 compared to the showroom.',
-    serviceUsed: 'Essential Servicing + AC Top-up',
-    location: 'Vijayawada Central'
+    date: 'Recent',
+    comment: 'Got my Swift gearbox and suspension overhaul done at Brother Motors Rampura Phul. Superb workmanship, genuine parts, and honest pricing. Highly recommend their work!',
+    serviceUsed: 'Gearbox Overhaul & Suspension',
+    location: 'Rampura Phul (BTI.)'
   },
   {
     id: 'rev-2',
-    author: 'Priya Sharma',
-    vehicle: 'Hyundai Creta SX',
+    author: 'Harinder Sharma',
+    vehicle: 'Hyundai i20',
     rating: 5,
-    date: '1 week ago',
-    comment: 'Got the Deep All Round Spa and Front Bumper Paint touch-up. The metallic paint finish is showroom grade! No toxic synthetic chemical smell inside the car at all.',
-    serviceUsed: 'Specialized Care & Deep Spa',
-    location: 'Vijayawada Central'
+    date: 'Recent',
+    comment: 'Needed a replacement door and fender. They provided tested car disposal parts saving me almost 30% compared to new showroom parts. The paint matching was seamless.',
+    serviceUsed: 'Car Disposal Parts & Painting',
+    location: 'Rampura Phul (BTI.)'
   },
   {
     id: 'rev-3',
-    author: 'David Lindqvist',
-    vehicle: 'Tesla Model 3 / Subaru Outback',
+    author: 'Amritpal Gill',
+    vehicle: 'Maruti Alto K10',
     rating: 5,
-    date: '2 weeks ago',
-    comment: 'Finally a workshop that genuinely cares about sustainability. The staff is polite, knowledgeable, and the warm coffee lounge makes waiting a pleasure.',
-    serviceUsed: 'Brake Inspection & Ceramic Detail',
-    location: 'Portland Roots'
+    date: 'Recent',
+    comment: 'AC service and gas top-up was done for just ₹1500! Cooling is ice cold now. Very polite staff and quick turnaround right near the Jio Petrol Pump.',
+    serviceUsed: 'AC Service & Gas Top-up',
+    location: 'Rampura Phul (BTI.)'
   }
 ];
 
@@ -536,38 +589,31 @@ export const FAQ_LIST: FAQItem[] = [
   {
     id: 'faq-1',
     category: 'pricing',
-    question: 'Are there any hidden charges?',
-    answer: 'Absolutely not. Transparency is rooted in our core values. The prices you see here, adjusted for your specific vehicle and selected services upon inspection, are what you pay. We always provide a detailed digital estimate and request your explicit approval before beginning any additional work.'
+    question: 'Are the prices fixed for periodic maintenance?',
+    answer: 'Yes, our periodic service packages (e.g. Basic Service at ₹300, Standard Service at ₹400, AC Service at ₹1500, etc.) are upfront and transparent as listed on our service sheet.'
   },
   {
     id: 'faq-2',
-    category: 'pricing',
-    question: 'How is the "Estimated Savings" calculated?',
-    answer: 'Our estimated savings (15% to 35%) are calculated by comparing our upfront transparent service and part rates against the average costs reported at authorized dealership service centers for the same vehicle make and model across the region.'
+    category: 'parts',
+    question: 'How do car disposal parts save 20% to 30%?',
+    answer: 'We source genuine OEM components from dismantled and disposal vehicles. Every part is carefully tested, cleaned, and verified by our mechanics, allowing us to pass on 20% to 30% in direct savings compared to brand new retail parts.'
   },
   {
     id: 'faq-3',
     category: 'parts',
-    question: 'Do you use genuine spare parts?',
-    answer: 'Yes, we prioritize unwavering quality. We use certified OES (Original Equipment Supplier) parts from trusted global manufacturers (Bosch, Denso, Valeo, Brembo, Mann-Filter) that meet or exceed OEM specifications, backed by our 6-month / 10,000 km warranty.'
+    question: 'Do you provide spare parts for all car brands?',
+    answer: 'Yes! We supply mechanical and electrical spare parts for all types of cars including Maruti Suzuki, Hyundai, Tata, Mahindra, Toyota, Honda, and other popular vehicles.'
   },
   {
     id: 'faq-4',
     category: 'service',
-    question: 'How does Doorstep Valet Pickup & Drop work?',
-    answer: 'Simply select "Valet Pickup" during booking. Our trained and background-verified driver arrives at your doorstep, performs an initial 10-point digital photo walkaround, and transports your vehicle to our workshop. You receive real-time live GPS tracking and progress updates.'
+    question: 'Do you buy and sell cars and government vehicles?',
+    answer: 'Yes! We actively buy and sell verified pre-owned cars, including government auction and fleet vehicles. We offer transparent valuation and assist with documentation.'
   },
   {
     id: 'faq-5',
-    category: 'warranty',
-    question: 'What warranty is offered on repairs & paintwork?',
-    answer: 'All periodic maintenance services carry a 1,000 km / 1-month satisfaction guarantee. Mechanical part replacements include a 6-month / 10,000 km warranty, while bodywork and bumper paint services come with an industry-leading 2-year anti-peeling warranty.'
+    category: 'service',
+    question: 'Where is Brother Motors located and what are the opening hours?',
+    answer: 'We are located Near Jio Petrol Pump, Rampura Phul (BTI.), Punjab. We are open every day from 8:00 AM to 6:00 PM.'
   }
-];
-
-export const ADD_ON_SERVICES = [
-  { id: 'addon-eco-wash', title: 'Eco Waterless Foam Wash', price: 399, icon: 'Droplet', desc: 'Saves 120 liters of water' },
-  { id: 'addon-ac-sanitizer', title: 'Antibacterial AC Duct Fumigation', price: 499, icon: 'Wind', desc: 'Eliminates 99.9% mildew & odor' },
-  { id: 'addon-wiper-fluid', title: 'Botanical Rain-X Wiper Fluid Flush', price: 199, icon: 'Sparkles', desc: 'Streaking prevention formula' },
-  { id: 'addon-battery-load', title: 'Computerized Battery Health Certificate', price: 299, icon: 'Activity', desc: 'Live alternator waveform report' },
 ];

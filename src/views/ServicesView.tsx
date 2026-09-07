@@ -1,57 +1,30 @@
 import React, { useState } from 'react';
 import {
   Wrench,
-  Sliders,
-  Sun,
   Snowflake,
-  BatteryCharging,
-  Disc,
-  Sparkles,
-  Settings2,
   ShieldCheck,
-  FileText,
   Clock,
-  Check,
-  ArrowRight,
-  Send,
-  Layers,
+  Search,
+  Phone,
+  MessageSquare,
   Cpu,
   CheckCircle,
   Paintbrush,
-  Droplets
+  Sparkles,
+  TrendingDown,
+  Car,
+  ChevronRight
 } from 'lucide-react';
-import { SERVICE_CATEGORIES, SERVICES_LIST } from '../data/mockData';
+import { SERVICES_LIST, SERVICE_CATEGORIES, WORKSHOP_DETAILS, CORE_ADDITIONS } from '../data/mockData';
 import { ServiceItem } from '../types';
 
 interface ServicesViewProps {
-  onOpenBooking: (serviceId?: string) => void;
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal: (serviceName?: string) => void;
 }
 
-export const ServicesView: React.FC<ServicesViewProps> = ({
-  onOpenBooking,
-  onOpenQuoteModal,
-}) => {
-  const [activeCategory, setActiveCategory] = useState<string>('our-services');
+export const ServicesView: React.FC<ServicesViewProps> = ({ onOpenQuoteModal }) => {
+  const [activeCategory, setActiveCategory] = useState<string>('all-services');
   const [searchQuery, setSearchQuery] = useState<string>('');
-
-  const getCategoryIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Wrench': return Wrench;
-      case 'Sliders': return Sliders;
-      case 'Sun': return Sun;
-      case 'Snowflake': return Snowflake;
-      case 'BatteryCharging': return BatteryCharging;
-      case 'Disc': return Disc;
-      case 'Sparkles': return Sparkles;
-      case 'Settings2': return Settings2;
-      case 'ShieldCheck': return ShieldCheck;
-      case 'FileText': return FileText;
-      case 'Cpu': return Cpu;
-      case 'Layers': return Layers;
-      default: return Wrench;
-    }
-  };
 
   const getServiceIcon = (iconName: string) => {
     switch (iconName) {
@@ -60,20 +33,16 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
       case 'Cpu': return Cpu;
       case 'CheckCircle': return CheckCircle;
       case 'Snowflake': return Snowflake;
-      case 'BatteryCharging': return BatteryCharging;
-      case 'Disc': return Disc;
+      case 'ShieldCheck': return ShieldCheck;
       case 'Paintbrush': return Paintbrush;
-      case 'Droplets': return Droplets;
-      case 'Sun': return Sun;
-      case 'Sliders': return Sliders;
-      case 'Layers': return Layers;
+      case 'TrendingDown': return TrendingDown;
+      case 'Car': return Car;
       default: return Wrench;
     }
   };
 
-  // Filtered services
   const filteredServices = SERVICES_LIST.filter((svc) => {
-    const matchesCat = activeCategory === 'all' || svc.category === activeCategory || (activeCategory === 'our-services' && svc.category === 'our-services');
+    const matchesCat = activeCategory === 'all-services' || svc.category === activeCategory;
     const matchesSearch =
       searchQuery.trim() === '' ||
       svc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -83,199 +52,185 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
   });
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12 flex flex-col md:flex-row gap-8">
-      {/* Sidebar Filter (Desktop) - Matches HTML / Screenshot */}
-      <aside className="hidden md:block w-64 shrink-0">
-        <div className="sticky top-24 bg-[#f5f1ea] rounded-2xl p-6 shadow-sm border border-[#c4c8bc]/40 space-y-4">
-          <h3 className="font-headline font-bold text-lg text-[#2e3230]">
-            Categories
-          </h3>
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-12">
+      {/* Header */}
+      <div className="text-center max-w-3xl mx-auto space-y-3">
+        <span className="text-xs font-bold text-red-700 bg-red-50 border border-red-100 px-3 py-1 rounded-full uppercase tracking-wider">
+          Complete Automotive Capabilities
+        </span>
+        <h1 className="font-headline font-black text-3xl sm:text-4xl md:text-5xl text-gray-900">
+          Brother Motors Services & Parts
+        </h1>
+        <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-body">
+          From ₹300 routine servicing and AC gas refills to complete paint booth jobs, 20–30% cheaper car disposal parts, and government vehicle trades.
+        </p>
+      </div>
 
-          <ul className="space-y-1.5 font-body">
-            {SERVICE_CATEGORIES.map((cat) => {
-              const IconComp = getCategoryIcon(cat.icon);
-              const isActive = activeCategory === cat.id;
-              return (
-                <li key={cat.id}>
-                  <button
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`w-full flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all text-left cursor-pointer ${
-                      isActive
-                        ? 'bg-[#d8f0de] text-[#2a6038] font-bold shadow-2xs'
-                        : 'text-[#5a5f5c] hover:text-[#4a7c59] hover:bg-[#eae6de]'
-                    }`}
-                  >
-                    <span className="flex items-center gap-2.5">
-                      <IconComp className={`w-4 h-4 ${isActive ? 'text-[#4a7c59]' : 'text-[#74796e]'}`} />
-                      {cat.name}
-                    </span>
-                    {cat.isNew && (
-                      <span className="text-[10px] font-bold bg-[#705c30] text-white px-1.5 py-0.2 rounded-full">
-                        New
-                      </span>
-                    )}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-
-          <div className="pt-4 border-t border-[#eae6de]">
-            <button
-              onClick={() => setActiveCategory('all')}
-              className={`w-full py-2 rounded-xl text-xs font-bold text-center border transition-colors ${
-                activeCategory === 'all'
-                  ? 'bg-[#4a7c59] text-white border-[#4a7c59]'
-                  : 'bg-white text-[#5a5f5c] border-[#c4c8bc] hover:bg-[#f0ece4]'
-              }`}
-            >
-              View All ({SERVICES_LIST.length} Services)
-            </button>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <div className="flex-grow space-y-8">
-        {/* Mobile Category Filter Pills (Matches HTML) */}
-        <div className="md:hidden overflow-x-auto pb-2 flex gap-2">
-          <button
-            onClick={() => setActiveCategory('all')}
-            className={`whitespace-nowrap px-4 py-2 rounded-full font-bold text-xs shadow-2xs transition-all ${
-              activeCategory === 'all'
-                ? 'bg-[#4a7c59] text-white'
-                : 'bg-[#eae6de] text-[#5a5f5c]'
-            }`}
+      {/* 4 Core Pillars Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {CORE_ADDITIONS.map((core) => (
+          <div
+            key={core.id}
+            className="bg-white rounded-2xl p-5 border border-gray-200 shadow-2xs hover:shadow-md hover:border-red-200 transition-all flex flex-col justify-between"
           >
-            All Services
-          </button>
-          {SERVICE_CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`whitespace-nowrap px-4 py-2 rounded-full font-bold text-xs shadow-2xs transition-all ${
-                activeCategory === cat.id
-                  ? 'bg-[#4a7c59] text-white'
-                  : 'bg-[#eae6de] text-[#5a5f5c] hover:bg-[#e4e0d8]'
-              }`}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
+            <div>
+              <span className="text-[10px] font-bold text-red-700 bg-red-50 border border-red-100 px-2 py-0.5 rounded uppercase tracking-wider inline-block mb-2">
+                {core.badge}
+              </span>
+              <h3 className="font-headline font-bold text-base text-gray-900 mb-1.5">
+                {core.title}
+              </h3>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                {core.desc}
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+              <a
+                href={`tel:${WORKSHOP_DETAILS.phone1}`}
+                className="font-bold text-red-600 hover:text-red-700 flex items-center gap-1"
+              >
+                <Phone className="w-3 h-3" /> Call Inquire: {WORKSHOP_DETAILS.phone1}
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
 
-        {/* Section Header with Amber Accent Line */}
-        <div className="space-y-3">
-          <div className="w-16 h-1 bg-[#705c30] rounded-full" />
-          <h1 className="font-headline font-bold text-3xl md:text-4xl text-[#2e3230]">
-            Workshop Services Available In-Studio
-          </h1>
-          <p className="font-body text-[#5a5f5c] text-base md:text-lg max-w-3xl leading-relaxed">
-            Choose from a wide assortment of organic craftsmanship services from periodic maintenance, tool care, restorative detailing, and much more, all handled with rooted warmth.
-          </p>
-        </div>
-
-        {/* Search Bar */}
-        <div className="bg-[#ffffff] p-3 rounded-2xl border border-[#c4c8bc]/40 shadow-xs flex items-center gap-3">
+      {/* Search & Category Filter Bar */}
+      <div className="space-y-4">
+        {/* Search */}
+        <div className="bg-white p-3 rounded-2xl border border-gray-200 shadow-xs flex items-center gap-3 max-w-2xl mx-auto focus-within:border-red-400 transition-colors">
+          <Search className="w-4 h-4 text-gray-400 ml-1" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search any service (e.g., Brake, Synthetic Oil, AC Gas, Paint, Spa)..."
-            className="flex-1 text-xs sm:text-sm bg-transparent border-none focus:outline-none text-[#2e3230] placeholder-[#74796e] px-2 font-body"
+            placeholder="Search service, part, or repair (e.g., Alto, AC gas, paint, disposal parts)..."
+            className="flex-1 text-xs sm:text-sm bg-transparent border-none focus:outline-none text-gray-900 placeholder-gray-400"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="text-xs text-[#74796e] hover:text-[#2e3230] px-2 font-bold"
+              className="text-xs text-gray-500 hover:text-gray-900 font-bold px-2"
             >
               Clear
             </button>
           )}
         </div>
 
-        {/* Service Cards Grid - Bento Layout matching screenshot */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredServices.length === 0 ? (
-            <div className="col-span-full py-12 text-center space-y-3 bg-[#f5f1ea] rounded-2xl">
-              <div className="text-[#74796e] text-sm">No services found matching your query.</div>
-              <button
-                onClick={() => { setActiveCategory('all'); setSearchQuery(''); }}
-                className="text-xs font-bold text-[#4a7c59] underline"
-              >
-                Reset Filters
-              </button>
-            </div>
-          ) : (
-            filteredServices.map((svc) => {
-              const IconComponent = getServiceIcon(svc.icon);
-              return (
-                <div
-                  key={svc.id}
-                  className="bg-[#ffffff] rounded-2xl p-6 shadow-[0_4px_20px_rgba(46,50,48,0.05)] border border-[#c4c8bc]/30 flex flex-col items-center text-center hover:shadow-[0_8px_30px_rgba(46,50,48,0.12)] transition-all group relative overflow-hidden cursor-pointer"
-                >
-                  {/* Subtle hover gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#4a7c59]/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                  {/* New badge if applicable */}
-                  {svc.isNew && (
-                    <div className="absolute top-0 right-0 bg-[#705c30] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-2xl z-20 shadow-2xs">
-                      New
-                    </div>
-                  )}
-
-                  {/* Round Icon Container (Matches screenshot) */}
-                  <div className="w-20 h-20 rounded-full bg-[#f5f1ea] flex items-center justify-center mb-4 group-hover:scale-108 group-hover:bg-[#d8f0de] transition-all">
-                    <IconComponent className="w-9 h-9 text-[#4a7c59]" />
-                  </div>
-
-                  <h3 className="font-headline font-bold text-lg text-[#2e3230] mb-1.5 relative z-10 group-hover:text-[#4a7c59] transition-colors">
-                    {svc.title}
-                  </h3>
-
-                  <p className="font-body text-[#5a5f5c] text-xs sm:text-sm mb-4 flex-grow relative z-10 leading-relaxed">
-                    {svc.shortDesc}
-                  </p>
-
-                  <div className="w-full pt-3 border-t border-[#f0ece4] flex items-center justify-between text-xs text-[#5a5f5c] mb-4 relative z-10">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 text-[#74796e]" /> {svc.duration}
-                    </span>
-                    <span className="font-bold text-sm text-[#4a7c59]">
-                      ₹{svc.price.toLocaleString()}
-                    </span>
-                  </div>
-
-                  {/* Book Now Button (Matches Screenshot & HTML) */}
-                  <button
-                    onClick={() => onOpenBooking(svc.id)}
-                    className="w-full bg-[#f5f1ea] text-[#4a7c59] border border-[#4a7c59]/30 hover:bg-[#4a7c59] hover:text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all relative z-10 shadow-2xs hover:shadow-xs active:scale-98 cursor-pointer"
-                  >
-                    Book Now
-                  </button>
-                </div>
-              );
-            })
-          )}
-
-          {/* Promo Banner spanning full columns (Matches screenshot & HTML) */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4 bg-[#78a886] rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between shadow-sm relative overflow-hidden gap-6">
-            <div className="absolute -right-20 -top-20 w-64 h-64 bg-[#4a7c59]/20 rounded-full blur-3xl" />
-            <div className="relative z-10 max-w-xl text-center md:text-left">
-              <h2 className="font-headline font-bold text-2xl sm:text-3xl text-[#002110] mb-2">
-                Need a custom quote?
-              </h2>
-              <p className="font-body text-[#002110]/80 text-sm sm:text-base leading-relaxed">
-                Our artisans can craft a tailored service plan specifically for your unique vehicle needs. Connect with our team today.
-              </p>
-            </div>
+        {/* Categories */}
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {SERVICE_CATEGORIES.map((cat) => (
             <button
-              onClick={onOpenQuoteModal}
-              className="relative z-10 bg-[#faf6f0] text-[#2a6038] hover:bg-[#2e3230] hover:text-white font-bold text-sm px-8 py-3.5 rounded-xl transition-all shadow-sm whitespace-nowrap cursor-pointer transform active:scale-95"
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                activeCategory === cat.id
+                  ? 'bg-red-600 text-white shadow-xs'
+                  : 'bg-white text-gray-600 border border-gray-200 hover:bg-red-50 hover:text-red-600'
+              }`}
             >
-              Contact Artisans
+              {cat.name}
             </button>
-          </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Services Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredServices.map((svc) => {
+          const IconComp = getServiceIcon(svc.icon);
+          return (
+            <div
+              key={svc.id}
+              className="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs hover:shadow-md hover:border-red-200 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="w-12 h-12 rounded-xl bg-red-50 text-red-600 group-hover:bg-red-100 transition-colors flex items-center justify-center">
+                    <IconComp className="w-6 h-6" />
+                  </div>
+                  {svc.price > 0 ? (
+                    <div className="text-right">
+                      <div className="text-xl font-headline font-black text-gray-900">
+                        ₹{svc.price}
+                      </div>
+                      {svc.originalPrice && (
+                        <div className="text-[11px] text-gray-400 line-through">
+                          ₹{svc.originalPrice}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <span className="text-xs font-bold text-red-700 bg-red-50 border border-red-100 px-2.5 py-1 rounded-full">
+                      Custom Estimate
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="font-headline font-bold text-lg text-gray-900 group-hover:text-red-600 transition-colors mb-1.5">
+                  {svc.title}
+                </h3>
+                <p className="text-xs text-gray-600 leading-relaxed mb-4">
+                  {svc.shortDesc}
+                </p>
+
+                {/* Features List */}
+                <ul className="space-y-1.5 mb-4 text-xs text-gray-700">
+                  {svc.features.map((feat, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-red-600 shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-4 border-t border-gray-100 flex items-center gap-2">
+                <a
+                  href={`tel:${WORKSHOP_DETAILS.phone1}`}
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-2xs"
+                >
+                  <Phone className="w-3.5 h-3.5" /> Call Now
+                </a>
+                <button
+                  onClick={() => onOpenQuoteModal(svc.title)}
+                  className="bg-gray-50 hover:bg-gray-100 text-gray-800 text-xs font-bold py-2.5 px-3 rounded-xl border border-gray-200 transition-colors"
+                >
+                  Inquire
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Bottom Assistance Banner */}
+      <div className="bg-red-50/50 rounded-3xl p-6 sm:p-10 border border-red-100 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="space-y-2 text-center md:text-left">
+          <h2 className="text-xl sm:text-2xl font-headline font-bold text-gray-900">
+            Looking for a Specific Part or Custom Repair?
+          </h2>
+          <p className="text-xs sm:text-sm text-gray-600 max-w-xl">
+            We have spare parts for all cars and certified car disposal parts at 20%–30% savings. Call our Rampura Phul workshop directly.
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href={`tel:${WORKSHOP_DETAILS.phone1}`}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-colors flex items-center gap-1.5 shadow-xs"
+          >
+            <Phone className="w-4 h-4" /> {WORKSHOP_DETAILS.phone1}
+          </a>
+          <a
+            href={`https://wa.me/917837600098`}
+            target="_blank"
+            rel="noreferrer"
+            className="bg-[#25D366] hover:bg-[#20b858] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-colors flex items-center gap-1.5 shadow-xs"
+          >
+            <MessageSquare className="w-4 h-4" /> WhatsApp
+          </a>
         </div>
       </div>
     </div>

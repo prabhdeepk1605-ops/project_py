@@ -34,25 +34,25 @@ export const MongoStatusModal: React.FC<MongoStatusModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-[#faf6f0] rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-[#c4c8bc] relative text-left">
+      <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-gray-200 relative text-left">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 text-[#5a5f5c] hover:text-[#2e3230] p-1.5 rounded-full hover:bg-[#eae6de] transition-colors"
+          className="absolute top-5 right-5 text-gray-500 hover:text-gray-900 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="flex items-center gap-3 mb-5">
-          <div className="w-12 h-12 rounded-2xl bg-[#d8f0de] text-[#4a7c59] flex items-center justify-center shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center shadow-xs border border-red-100">
             <Database className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-headline font-bold text-xl text-[#2e3230]">
+              <h3 className="font-headline font-bold text-xl text-gray-900">
                 MongoDB Database Status
               </h3>
             </div>
-            <p className="text-xs text-[#5a5f5c]">Real-time backend synchronization</p>
+            <p className="text-xs text-gray-600">Real-time backend synchronization</p>
           </div>
         </div>
 
@@ -60,17 +60,17 @@ export const MongoStatusModal: React.FC<MongoStatusModalProps> = ({
         <div
           className={`p-4 rounded-2xl border mb-5 ${
             status?.connected
-              ? 'bg-[#d8f0de]/60 border-[#4a7c59]/40 text-[#2a6038]'
+              ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
               : status?.configured
-              ? 'bg-[#f8e0a8]/40 border-[#705c30]/40 text-[#705c30]'
-              : 'bg-[#f0ece4] border-[#c4c8bc] text-[#5a5f5c]'
+              ? 'bg-amber-50 border-amber-200 text-amber-800'
+              : 'bg-gray-50 border-gray-200 text-gray-700'
           }`}
         >
           <div className="flex items-start gap-3">
             {status?.connected ? (
-              <CheckCircle2 className="w-5 h-5 text-[#4a7c59] shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
             ) : (
-              <AlertTriangle className="w-5 h-5 text-[#705c30] shrink-0 mt-0.5" />
+              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
             )}
             <div className="text-xs space-y-1">
               <div className="font-bold text-sm">
@@ -82,7 +82,7 @@ export const MongoStatusModal: React.FC<MongoStatusModalProps> = ({
               </div>
               <p className="opacity-90">{status?.message || 'Database status active.'}</p>
               {status?.latencyMs ? (
-                <div className="text-[11px] font-semibold flex items-center gap-1 mt-1 text-[#4a7c59]">
+                <div className="text-[11px] font-semibold flex items-center gap-1 mt-1 text-emerald-700">
                   <Activity className="w-3.5 h-3.5" /> Ping Latency: {status.latencyMs} ms
                 </div>
               ) : null}
@@ -91,41 +91,41 @@ export const MongoStatusModal: React.FC<MongoStatusModalProps> = ({
         </div>
 
         {/* Database Details */}
-        <div className="bg-white p-4 rounded-2xl border border-[#c4c8bc]/40 space-y-3 mb-5 text-xs font-body">
-          <div className="flex justify-between items-center pb-2 border-b border-[#f0ece4]">
-            <span className="text-[#5a5f5c] flex items-center gap-1.5">
-              <HardDrive className="w-3.5 h-3.5 text-[#4a7c59]" /> Database Name
+        <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-3 mb-5 text-xs font-body">
+          <div className="flex justify-between items-center pb-2 border-b border-gray-200">
+            <span className="text-gray-600 flex items-center gap-1.5">
+              <HardDrive className="w-3.5 h-3.5 text-red-600" /> Database Name
             </span>
-            <span className="font-bold text-[#2e3230] font-mono">
-              {status?.dbName || 'terra_workshop'}
+            <span className="font-bold text-gray-900 font-mono">
+              {status?.dbName || 'brother_workshop'}
             </span>
           </div>
 
           <div className="space-y-2">
-            <span className="text-[#5a5f5c] font-bold block uppercase tracking-wider text-[10px]">
+            <span className="text-gray-600 font-bold block uppercase tracking-wider text-[10px]">
               Active MongoDB Collections
             </span>
             <div className="grid grid-cols-3 gap-2 text-center">
               {status?.collections && status.collections.length > 0 ? (
                 status.collections.map((col) => (
-                  <div key={col.name} className="bg-[#faf6f0] p-2 rounded-xl border border-[#c4c8bc]/30">
-                    <div className="font-bold text-[#2e3230] text-xs capitalize">{col.name}</div>
-                    <div className="text-[11px] text-[#4a7c59] font-semibold">{col.count} docs</div>
+                  <div key={col.name} className="bg-white p-2 rounded-xl border border-gray-200">
+                    <div className="font-bold text-gray-900 text-xs capitalize">{col.name}</div>
+                    <div className="text-[11px] text-red-600 font-semibold">{col.count} docs</div>
                   </div>
                 ))
               ) : (
                 <>
-                  <div className="bg-[#faf6f0] p-2 rounded-xl border border-[#c4c8bc]/30">
-                    <div className="font-bold text-[#2e3230] text-xs">Bookings</div>
-                    <div className="text-[11px] text-[#4a7c59] font-semibold">Active</div>
+                  <div className="bg-white p-2 rounded-xl border border-gray-200">
+                    <div className="font-bold text-gray-900 text-xs">Bookings</div>
+                    <div className="text-[11px] text-red-600 font-semibold">Active</div>
                   </div>
-                  <div className="bg-[#faf6f0] p-2 rounded-xl border border-[#c4c8bc]/30">
-                    <div className="font-bold text-[#2e3230] text-xs">Quotes</div>
-                    <div className="text-[11px] text-[#4a7c59] font-semibold">Active</div>
+                  <div className="bg-white p-2 rounded-xl border border-gray-200">
+                    <div className="font-bold text-gray-900 text-xs">Quotes</div>
+                    <div className="text-[11px] text-red-600 font-semibold">Active</div>
                   </div>
-                  <div className="bg-[#faf6f0] p-2 rounded-xl border border-[#c4c8bc]/30">
-                    <div className="font-bold text-[#2e3230] text-xs">Users</div>
-                    <div className="text-[11px] text-[#4a7c59] font-semibold">Active</div>
+                  <div className="bg-white p-2 rounded-xl border border-gray-200">
+                    <div className="font-bold text-gray-900 text-xs">Users</div>
+                    <div className="text-[11px] text-red-600 font-semibold">Active</div>
                   </div>
                 </>
               )}
@@ -134,12 +134,12 @@ export const MongoStatusModal: React.FC<MongoStatusModalProps> = ({
         </div>
 
         {/* Configuration Guide for User */}
-        <div className="bg-[#f0ece4] p-3.5 rounded-2xl border border-[#c4c8bc]/40 text-xs text-[#5a5f5c] space-y-1.5 mb-6">
-          <div className="font-bold text-[#2e3230] flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-[#4a7c59]" /> Production MongoDB Atlas Support
+        <div className="bg-gray-50 p-3.5 rounded-2xl border border-gray-200 text-xs text-gray-600 space-y-1.5 mb-6">
+          <div className="font-bold text-gray-900 flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-red-600" /> Production MongoDB Atlas Support
           </div>
           <p className="leading-relaxed text-[11px]">
-            To connect your live MongoDB Atlas or hosted database, set <code className="font-mono bg-white px-1 py-0.5 rounded text-[#2e3230]">MONGODB_URI</code> in your environment settings.
+            To connect your live MongoDB Atlas or hosted database, set <code className="font-mono bg-white border border-gray-200 px-1 py-0.5 rounded text-gray-900">MONGODB_URI</code> in your environment settings.
           </p>
         </div>
 
@@ -147,15 +147,15 @@ export const MongoStatusModal: React.FC<MongoStatusModalProps> = ({
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="px-4 py-2 rounded-xl border border-[#c4c8bc] text-xs font-bold text-[#2e3230] hover:bg-[#eae6de] transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 rounded-xl border border-gray-200 text-xs font-bold text-gray-800 hover:bg-gray-100 transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[#4a7c59]' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-red-600' : ''}`} />
             <span>{isRefreshing ? 'Testing Connection...' : 'Test Connection'}</span>
           </button>
 
           <button
             onClick={onClose}
-            className="px-6 py-2 rounded-xl bg-[#4a7c59] hover:bg-[#2a6038] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
+            className="px-6 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
           >
             Close
           </button>

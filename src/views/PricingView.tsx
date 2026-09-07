@@ -1,88 +1,27 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import {
-  Car,
   Wrench,
   TrendingDown,
   ChevronDown,
   Sparkles,
   ShieldCheck,
   CheckCircle2,
-  Calendar,
-  Layers,
+  Phone,
+  MessageSquare,
   Snowflake,
   Cpu,
-  Info
+  Info,
+  Car,
+  Paintbrush
 } from 'lucide-react';
-import { VEHICLE_MAKES, FAQ_LIST, HOTLINKED_IMAGES } from '../data/mockData';
-import { FAQItem } from '../types';
+import { PRICING_TABLE_SERVICES, WORKSHOP_DETAILS, FAQ_LIST } from '../data/mockData';
 
 interface PricingViewProps {
-  onOpenBooking: (serviceId?: string, make?: string, model?: string) => void;
+  onOpenQuoteModal: (serviceName?: string) => void;
 }
 
-export const PricingView: React.FC<PricingViewProps> = ({ onOpenBooking }) => {
-  const [selectedMake, setSelectedMake] = useState<string>('Maruti Suzuki');
-  const [selectedModel, setSelectedModel] = useState<string>('Alto');
+export const PricingView: React.FC<PricingViewProps> = ({ onOpenQuoteModal }) => {
   const [openFaqId, setOpenFaqId] = useState<string>('faq-1');
-
-  // Find make configuration
-  const currentMake = VEHICLE_MAKES.find((m) => m.name === selectedMake) || VEHICLE_MAKES[0];
-  const currentModel = currentMake.models.find((m) => m.name.includes(selectedModel)) || currentMake.models[0];
-  const multiplier = currentModel?.priceMultiplier || 1.0;
-
-  // Calculate pricing rows dynamically based on the selected vehicle
-  const dynamicPriceRows = useMemo(() => {
-    return [
-      {
-        id: 'basic-service',
-        serviceType: `Basic Service (${selectedModel.includes('Alto') ? '800 Petrol' : 'Periodic Check'})`,
-        icon: Wrench,
-        price: Math.round(2199 * multiplier),
-        savings: '25% Avg.',
-        features: 'Engine oil change, oil filter, 40-pt digital health check',
-      },
-      {
-        id: 'standard-service',
-        serviceType: `Standard Service (${selectedModel})`,
-        icon: Wrench,
-        price: Math.round(2699 * multiplier),
-        savings: '20% Avg.',
-        features: 'All basic items + air filter, brake fluid flush, spark inspect',
-      },
-      {
-        id: 'comprehensive-service',
-        serviceType: 'Comprehensive Service',
-        icon: Cpu,
-        price: Math.round(4299 * multiplier),
-        savings: '30% Avg.',
-        features: 'Full vehicle tuning, wheel balancing, throttle body clean, AC filter',
-      },
-      {
-        id: 'ac-service',
-        serviceType: 'AC Service & Gas Top-up',
-        icon: Snowflake,
-        price: Math.round(1599 * multiplier),
-        savings: '15% Avg.',
-        features: 'Refrigerant gas refill, condenser pressure wash, duct fogging',
-      },
-      {
-        id: 'brake-overhaul',
-        serviceType: 'Front & Rear Brake Overhaul',
-        icon: ShieldCheck,
-        price: Math.round(1899 * multiplier),
-        savings: '22% Avg.',
-        features: 'Brake pad replacement, caliper pin greasing, disc rotor skim',
-      },
-      {
-        id: 'spa-detail',
-        serviceType: 'Eco Deep Clean & Spa',
-        icon: Sparkles,
-        price: Math.round(1299 * multiplier),
-        savings: '28% Avg.',
-        features: 'Steam upholstery shampoo, exterior Carnauba wax, underbody jet',
-      },
-    ];
-  }, [multiplier, selectedModel]);
 
   const toggleFaq = (id: string) => {
     setOpenFaqId(openFaqId === id ? '' : id);
@@ -90,216 +29,273 @@ export const PricingView: React.FC<PricingViewProps> = ({ onOpenBooking }) => {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-16 space-y-16">
-      {/* Header Section - Matches HTML/Screenshot */}
+      {/* Header Section */}
       <section className="text-center max-w-3xl mx-auto flex flex-col gap-4">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#d8f0de] text-[#2a6038] text-xs font-bold mx-auto border border-[#4a7c59]/20">
-          <ShieldCheck className="w-3.5 h-3.5" /> 100% Upfront Estimates
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-red-50 text-red-700 text-xs font-bold mx-auto border border-red-200">
+          <ShieldCheck className="w-3.5 h-3.5 text-red-600" /> 100% Upfront & Transparent Rates
         </div>
-        <h1 className="font-headline font-bold text-4xl md:text-5xl text-[#2e3230] leading-tight">
-          Transparent Pricing, <br />
-          <span className="text-[#4a7c59] italic">Rooted in Value</span>
+        <h1 className="font-headline font-black text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-tight">
+          Brother Motors Transparent Pricing
         </h1>
-        <p className="text-[#5a5f5c] text-base md:text-lg leading-relaxed font-body">
-          Select your vehicle model below to view our upfront service costs. No hidden fees, just honest work.
+        <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed font-body">
+          Honest, highly affordable car servicing and repairs in Rampura Phul. No hidden charges — all rates clearly itemized upfront.
         </p>
       </section>
 
-      {/* Pricing Content Area */}
-      <section className="flex flex-col gap-8">
-        {/* Vehicle Selector (Matches Screenshot & HTML) */}
-        <div className="bg-[#f5f1ea] rounded-2xl p-6 md:p-8 shadow-[0_4px_20px_rgba(46,50,48,0.06)] border border-[#c4c8bc]/40 max-w-4xl mx-auto w-full">
-          <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
-            {/* Make */}
-            <div className="flex-1 w-full">
-              <label className="block text-xs font-bold text-[#5a5f5c] mb-2 uppercase tracking-wider">
-                Vehicle Make
-              </label>
-              <div className="relative">
-                <select
-                  value={selectedMake}
-                  onChange={(e) => {
-                    setSelectedMake(e.target.value);
-                    const mk = VEHICLE_MAKES.find((m) => m.name === e.target.value);
-                    if (mk && mk.models.length > 0) {
-                      setSelectedModel(mk.models[0].name);
-                    }
-                  }}
-                  className="block w-full pl-4 pr-10 py-3 text-xs sm:text-sm font-semibold border border-[#c4c8bc] bg-white focus:outline-none focus:ring-2 focus:ring-[#4a7c59] rounded-xl text-[#2e3230] appearance-none cursor-pointer font-body shadow-2xs"
-                >
-                  {VEHICLE_MAKES.map((m) => (
-                    <option key={m.id} value={m.name}>
-                      {m.name}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#4a7c59]">
-                  <ChevronDown className="w-4 h-4" />
+      {/* Special Highlights Banner: Car Disposal Parts & Spare Parts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Disposal Parts Card */}
+        <div className="bg-gradient-to-br from-red-50 via-white to-red-50/40 rounded-3xl p-6 sm:p-8 border border-red-200 flex flex-col justify-between shadow-xs">
+          <div>
+            <span className="text-xs font-bold bg-red-600 text-white px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-3 shadow-2xs">
+              Special Savings
+            </span>
+            <h3 className="text-xl sm:text-2xl font-headline font-bold text-gray-900">
+              Car Disposal Parts (20% – 30% Cheaper)
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
+              Tested, authentic original parts from disposal and dismantled vehicles priced <strong>20% to 30% lower than brand new retail parts</strong>. Inspected for structural integrity and high reliability by our master mechanics.
+            </p>
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a
+              href={`tel:${WORKSHOP_DETAILS.phone1}`}
+              className="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 transition-colors shadow-xs"
+            >
+              <Phone className="w-3.5 h-3.5" /> Call for Parts ({WORKSHOP_DETAILS.phone1})
+            </a>
+            <button
+              onClick={() => onOpenQuoteModal('Car Disposal Parts')}
+              className="bg-white hover:bg-gray-50 text-gray-900 text-xs font-bold px-4 py-2.5 rounded-xl border border-gray-200 transition-colors shadow-2xs"
+            >
+              Check Availability
+            </button>
+          </div>
+        </div>
+
+        {/* Spare Parts for All Cars Card */}
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 flex flex-col justify-between shadow-xs">
+          <div>
+            <span className="text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-3">
+              All Brands Covered
+            </span>
+            <h3 className="text-xl sm:text-2xl font-headline font-bold text-gray-900">
+              Spare Parts for All Types of Cars
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
+              Complete inventory of brand-new OEM and OES spares for Maruti, Hyundai, Tata, Mahindra, Toyota, Honda, and all passenger vehicles. Immediate availability in our Rampura Phul workshop.
+            </p>
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a
+              href={`https://wa.me/917837600098?text=${encodeURIComponent('Hello Brother Motors, I need spare parts for my car.')}`}
+              target="_blank"
+              rel="noreferrer"
+              className="bg-[#25D366] hover:bg-[#20b858] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 transition-colors shadow-xs"
+            >
+              <MessageSquare className="w-3.5 h-3.5" /> WhatsApp Spare Parts Desk
+            </a>
+            <button
+              onClick={() => onOpenQuoteModal('Spare Parts Inquiry')}
+              className="bg-gray-50 hover:bg-gray-100 text-gray-800 text-xs font-bold px-4 py-2.5 rounded-xl border border-gray-200 transition-colors"
+            >
+              Inquire Part Price
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Exact Pricing Table from Sheet */}
+      <section className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-gray-200 pb-4">
+          <div>
+            <h2 className="text-2xl font-headline font-bold text-gray-900">
+              Standard Service Rates
+            </h2>
+            <p className="text-xs text-gray-600 mt-0.5">
+              Exact itemized prices as updated for Brother Motors, Rampura Phul.
+            </p>
+          </div>
+          <span className="text-xs font-semibold text-red-700 bg-red-50 border border-red-100 px-3 py-1 rounded-full self-start sm:self-auto">
+            Updated Rates
+          </span>
+        </div>
+
+        {/* Responsive Pricing Grid / Table */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PRICING_TABLE_SERVICES.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs hover:shadow-md hover:border-red-200 transition-all flex flex-col justify-between relative group"
+            >
+              {/* Badge */}
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md border border-gray-200">
+                  Service #{item.number}
+                </span>
+                <span className="text-[11px] font-bold text-red-700 bg-red-50 border border-red-100 px-2 py-0.5 rounded-md">
+                  {item.savings}
+                </span>
+              </div>
+
+              {/* Title & Price */}
+              <div>
+                <h3 className="font-headline font-bold text-lg text-gray-900 group-hover:text-red-600 transition-colors">
+                  {item.service}
+                </h3>
+
+                <div className="mt-3 flex items-baseline gap-2">
+                  <span className="font-headline font-black text-3xl text-gray-900">
+                    ₹{item.price}
+                  </span>
+                  {item.originalPrice && (
+                    <span className="text-xs text-gray-400 line-through font-semibold">
+                      ₹{item.originalPrice}
+                    </span>
+                  )}
+                  <span className="text-[11px] text-gray-500 font-medium ml-1">
+                    (Labor & Checks)
+                  </span>
+                </div>
+
+                {/* Inclusions */}
+                <div className="mt-4 pt-4 border-t border-gray-100 space-y-2">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                    Package Inclusions:
+                  </div>
+                  <div className="flex items-start gap-2 text-xs text-gray-600 leading-relaxed">
+                    <CheckCircle2 className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                    <span>{item.includes}</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Model */}
-            <div className="flex-1 w-full">
-              <label className="block text-xs font-bold text-[#5a5f5c] mb-2 uppercase tracking-wider">
-                Vehicle Model
-              </label>
-              <div className="relative">
-                <select
-                  value={selectedModel}
-                  onChange={(e) => setSelectedModel(e.target.value)}
-                  className="block w-full pl-4 pr-10 py-3 text-xs sm:text-sm font-semibold border border-[#c4c8bc] bg-white focus:outline-none focus:ring-2 focus:ring-[#4a7c59] rounded-xl text-[#2e3230] appearance-none cursor-pointer font-body shadow-2xs"
+              {/* Action Buttons */}
+              <div className="mt-6 pt-4 border-t border-gray-100 flex items-center gap-2">
+                <a
+                  href={`tel:${WORKSHOP_DETAILS.phone1}`}
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-2xs"
                 >
-                  {currentMake.models.map((md) => (
-                    <option key={md.name} value={md.name}>
-                      {md.name} ({md.type})
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#4a7c59]">
-                  <ChevronDown className="w-4 h-4" />
-                </div>
+                  <Phone className="w-3.5 h-3.5" /> Call: {WORKSHOP_DETAILS.phone1}
+                </a>
+                <button
+                  onClick={() => onOpenQuoteModal(item.service)}
+                  className="bg-gray-50 hover:bg-gray-100 text-gray-800 text-xs font-bold py-2.5 px-3 rounded-xl border border-gray-200 transition-colors"
+                >
+                  Inquire
+                </button>
               </div>
             </div>
+          ))}
+        </div>
+      </section>
 
-            {/* View Prices Button */}
-            <div className="md:self-end w-full md:w-auto mt-2 md:mt-0">
+      {/* Additional Services: Full Car Repair & Paint + Sell & Purchase Cars */}
+      <section className="bg-gray-50 rounded-3xl p-6 sm:p-10 border border-gray-200 space-y-8">
+        <div className="max-w-2xl">
+          <h2 className="text-2xl font-headline font-bold text-gray-900">
+            Major Mechanical, Body Shop & Vehicle Sales
+          </h2>
+          <p className="text-xs sm:text-sm text-gray-600 mt-1">
+            We handle full vehicle overhauls, high-grade paint restoration, and government vehicle trading with transparent estimates upon inspection.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs hover:border-red-200 transition-colors space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+              <Paintbrush className="w-5 h-5" />
+            </div>
+            <h3 className="font-headline font-bold text-base text-gray-900">
+              Full Car Paint & Denting
+            </h3>
+            <p className="text-xs text-gray-600">
+              Scratch repair, panel beating, computerized paint shade matching, and heated baking booth gloss finish.
+            </p>
+            <div className="pt-2">
               <button
-                onClick={() => {
-                  const tableElem = document.getElementById('pricing-table-section');
-                  tableElem?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="w-full bg-[#f0e8db] hover:bg-[#c4a66a]/30 text-[#5e5548] hover:text-[#2e3230] font-bold text-xs sm:text-sm py-3 px-8 rounded-xl shadow-2xs transition-colors border border-[#c4c8bc]/60 cursor-pointer"
+                onClick={() => onOpenQuoteModal('Car Paint & Denting')}
+                className="text-xs font-bold text-red-600 hover:underline"
               >
-                View Prices
+                Request Paint Estimate →
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs hover:border-red-200 transition-colors space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+              <Wrench className="w-5 h-5" />
+            </div>
+            <h3 className="font-headline font-bold text-base text-gray-900">
+              Gearbox & Engine Overhauls
+            </h3>
+            <p className="text-xs text-gray-600">
+              Precision disassembly, bearing replacement, clutch overhauls, and suspension tuning as featured in our workshop gallery.
+            </p>
+            <div className="pt-2">
+              <button
+                onClick={() => onOpenQuoteModal('Gearbox / Engine Overhaul')}
+                className="text-xs font-bold text-red-600 hover:underline"
+              >
+                Inquire Overhaul Cost →
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs hover:border-red-200 transition-colors space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+              <Car className="w-5 h-5" />
+            </div>
+            <h3 className="font-headline font-bold text-base text-gray-900">
+              Sell & Purchase Cars (Govt. Vehicles)
+            </h3>
+            <p className="text-xs text-gray-600">
+              Certified pre-owned cars and government auction fleet vehicles available with complete legal documentation and RC transfer.
+            </p>
+            <div className="pt-2">
+              <button
+                onClick={() => onOpenQuoteModal('Sell or Buy Car')}
+                className="text-xs font-bold text-red-600 hover:underline"
+              >
+                Inquire Available Vehicles →
               </button>
             </div>
           </div>
         </div>
-
-        {/* Pricing Table Container (Matches HTML & Screenshot) */}
-        <div
-          id="pricing-table-section"
-          className="bg-white rounded-3xl shadow-[0_4px_25px_rgba(46,50,48,0.06)] border border-[#c4c8bc]/40 overflow-hidden max-w-5xl mx-auto w-full"
-        >
-          {/* Table Header Styling */}
-          <div className="bg-[#f0ece4] py-5 px-6 border-b border-[#c4c8bc]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#d8f0de] text-[#4a7c59] flex items-center justify-center">
-                <Car className="w-4 h-4" />
-              </div>
-              <h2 className="font-headline font-bold text-lg sm:text-xl text-[#2e3230]">
-                Service Price List:{' '}
-                <span className="text-[#4a7c59] font-semibold">
-                  {selectedMake} {selectedModel}
-                </span>
-              </h2>
-            </div>
-            <span className="text-xs text-[#5a5f5c] font-semibold">
-              Vehicle Segment: {currentModel.type}
-            </span>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse font-body">
-              <thead>
-                <tr className="bg-[#f5f1ea] text-[#5a5f5c] font-bold text-xs uppercase tracking-wider border-b border-[#c4c8bc]/40">
-                  <th className="px-6 py-4 w-1/2">Services Type</th>
-                  <th className="px-6 py-4 w-1/4">Price Starts From (₹)</th>
-                  <th className="px-6 py-4 w-1/4">Estimated Savings</th>
-                  <th className="px-6 py-4 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#c4c8bc]/20">
-                {dynamicPriceRows.map((row) => {
-                  const IconComponent = row.icon;
-                  return (
-                    <tr
-                      key={row.id}
-                      className="hover:bg-[#faf6f0] transition-colors group"
-                    >
-                      <td className="px-6 py-5 font-medium text-[#2e3230]">
-                        <div className="flex items-start gap-3">
-                          <div className="w-8 h-8 rounded-full bg-[#d8f0de]/50 flex items-center justify-center text-[#4a7c59] group-hover:bg-[#d8f0de] transition-colors shrink-0 mt-0.5">
-                            <IconComponent className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <div className="font-bold text-sm text-[#2e3230] group-hover:text-[#4a7c59] transition-colors">
-                              {row.serviceType}
-                            </div>
-                            <div className="text-[11px] text-[#5a5f5c] mt-0.5">
-                              {row.features}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td className="px-6 py-5 font-headline font-bold text-base sm:text-lg text-[#2e3230]">
-                        ₹{row.price.toLocaleString()}
-                      </td>
-
-                      <td className="px-6 py-5">
-                        <span className="inline-flex items-center gap-1 bg-[#f8e0a8]/40 text-[#705c30] font-bold px-3 py-1 rounded-full text-xs border border-[#705c30]/20">
-                          <TrendingDown className="w-3.5 h-3.5" />
-                          {row.savings}
-                        </span>
-                      </td>
-
-                      <td className="px-6 py-5 text-right">
-                        <button
-                          onClick={() => onOpenBooking(row.id, selectedMake, selectedModel)}
-                          className="bg-[#4a7c59] hover:bg-[#2a6038] text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition-colors shadow-2xs inline-flex items-center gap-1 cursor-pointer"
-                        >
-                          <span>Book</span>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="bg-[#f5f1ea] p-4 text-center text-xs text-[#5a5f5c] border-t border-[#c4c8bc]/30">
-            * Prices are indicative and may vary based on exact vehicle condition, engine displacement, and workshop hub location. Taxes extra.
-          </div>
-        </div>
       </section>
 
-      {/* Frequently Asked Questions Section (Matches Screenshot & HTML) */}
-      <section className="max-w-4xl mx-auto w-full mt-12 flex flex-col gap-8">
-        <div className="text-center">
-          <h3 className="font-headline font-bold text-3xl text-[#2e3230] mb-2">
+      {/* FAQ Section */}
+      <section className="max-w-3xl mx-auto space-y-6">
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl font-headline font-bold text-gray-900">
             Frequently Asked Questions
-          </h3>
-          <p className="text-[#5a5f5c] text-sm sm:text-base font-body">
-            Got questions about our pricing? We've got clear answers.
+          </h2>
+          <p className="text-xs text-gray-600">
+            Everything you need to know about Brother Motors pricing and parts.
           </p>
         </div>
 
-        <div className="grid gap-3.5">
+        <div className="space-y-3">
           {FAQ_LIST.map((faq) => {
             const isOpen = openFaqId === faq.id;
             return (
               <div
                 key={faq.id}
-                className="bg-white rounded-2xl border border-[#c4c8bc]/40 shadow-xs overflow-hidden transition-all"
+                className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-2xs transition-colors"
               >
                 <button
                   onClick={() => toggleFaq(faq.id)}
-                  className="w-full flex items-center justify-between p-5 sm:p-6 cursor-pointer text-left font-headline font-bold text-[#2e3230] text-base sm:text-lg hover:text-[#4a7c59] transition-colors"
+                  className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 font-headline font-bold text-sm sm:text-base text-gray-900"
                 >
                   <span>{faq.question}</span>
-                  <div
-                    className={`w-7 h-7 rounded-full bg-[#f5f1ea] flex items-center justify-center text-[#4a7c59] transition-transform duration-300 ${
-                      isOpen ? 'rotate-180 bg-[#d8f0de]' : ''
+                  <ChevronDown
+                    className={`w-4 h-4 text-red-600 transition-transform duration-200 shrink-0 ${
+                      isOpen ? 'rotate-180' : ''
                     }`}
-                  >
-                    <ChevronDown className="w-4 h-4" />
-                  </div>
+                  />
                 </button>
-
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-xs sm:text-sm text-[#5a5f5c] leading-relaxed border-t border-[#f0ece4] font-body animate-in fade-in duration-200">
+                  <div className="px-4 sm:px-5 pb-5 pt-0 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
                     {faq.answer}
                   </div>
                 )}
